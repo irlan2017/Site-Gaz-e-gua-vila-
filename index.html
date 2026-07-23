@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central de Redes Sociais com Painel de Controle</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #0f172a;
+      color: #ffffff;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .header-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 40px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Título com letras EXTRA GRANDES */
+    h1 {
+      font-size: 6rem;
+      font-weight: 900;
+      color: #f8fafc;
+      text-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      margin-bottom: 15px;
+      text-align: center;
+      letter-spacing: 2px;
+      line-height: 1;
+      transition: color 0.3s ease;
+    }
+
+    .footer-area {
+      margin-top: 50px;
+      padding-top: 25px;
+      border-top: 1px solid #1e293b;
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* Botão do Painel de Controle BEM DISCRETO E PEQUENO */
+    .btn-admin {
+      background: rgba(255, 255, 255, 0.05);
+      color: #64748b;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: none;
+      transition: all 0.2s ease;
+      opacity: 0.6;
+    }
+
+    .btn-admin:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Seção dos Desenvolvedores no Rodapé */
+    .developer-info {
+      font-size: 0.9rem;
+      color: #64748b;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* Links do e-mail e WhatsApp em BRANCO */
+    .developer-info a {
+      color: #ffffff; 
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .developer-info a:hover {
+      color: #e2e8f0;
+      text-decoration: underline;
+    }
+
+    /* Destaque em BRANCO para o nome do desenvolvedor */
+    .dev-name {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .card {
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 220px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: white;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+
+    .card h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    .card p {
+      font-size: 1.3rem;
+      font-weight: 600;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 10px 20px;
+      border-radius: 30px;
+      margin-top: 15px;
+    }
+
+    /* Cores das Redes Sociais Padrão */
+    .grad-youtube   { background: linear-gradient(135deg, #ff0000, #cc0000); }
+    .grad-whatsapp  { background: linear-gradient(135deg, #25d366, #128c7e); }
+    .grad-facebook  { background: linear-gradient(135deg, #1877f2, #0d52b1); }
+    .grad-instagram { background: linear-gradient(135deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888); }
+    .grad-telegram  { background: linear-gradient(135deg, #0088cc, #005580); }
+    .grad-tiktok    { background: linear-gradient(135deg, #00f2fe, #4facfe, #ff0050); }
+    .grad-kwai      { background: linear-gradient(135deg, #ff8c00, #ff4500); }
+
+    /* Janelas Popups */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #1e293b;
+      padding: 35px;
+      border-radius: 25px;
+      max-width: 650px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      border: 3px solid #38bdf8;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-content h3 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+    }
+
+    .modal-content p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #cbd5e1;
+    }
+
+    .btn-abrir {
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #fff;
+      background: #3b82f6;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-abrir:hover {
+      background: #2563eb;
+    }
+
+    .fechar {
+      position: absolute;
+      top: 15px; right: 20px;
+      font-size: 2.5rem;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .fechar:hover {
+      color: #ffffff;
+    }
+
+    /* Formulários e Inputs do Painel */
+    .admin-header-section {
+      background: #0f172a;
+      border: 1px solid #f59e0b;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .admin-header-section label {
+      font-size: 1rem;
+      color: #f59e0b;
+      font-weight: bold;
+      display: block;
+    }
+
+    .admin-header-section input[type="text"] {
+      width: 100%;
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #fff;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .admin-list {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .admin-item {
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 15px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .admin-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-item label {
+      font-size: 0.9rem;
+      color: #38bdf8;
+      font-weight: bold;
+    }
+
+    .btn-remover-card {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .btn-remover-card:hover {
+      background: #dc2626;
+    }
+
+    .admin-item input, .admin-item textarea {
+      width: 100%;
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .color-picker-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .color-picker-box input[type="color"] {
+      width: 50px;
+      height: 40px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: none;
+    }
+
+    .admin-item textarea {
+      resize: vertical;
+      height: 60px;
+    }
+
+    .btn-add-card {
+      background: #0284c7;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+      transition: background 0.2s;
+    }
+
+    .btn-add-card:hover {
+      background: #0369a1;
+    }
+
+    .btn-salvar {
+      background: #22c55e;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .btn-salvar:hover {
+      background: #16a34a;
+    }
+
+    /* Ajuste para telas menores */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-area">
+    <h1 id="tituloCentral">Central de Redes Sociais</h1>
+  </div>
+
+  <div class="grid-container" id="gridRedes">
+    <!-- Bloco dinâmico preenchido por JavaScript -->
+  </div>
+
+  <div class="footer-area">
+    <button class="btn-admin" onclick="abrirPainel()">⚙️ painel de controle</button>
+    
+    <!-- Informações dos Desenvolvedores -->
+    <div class="developer-info">
+      Desenvolvedor: <strong class="dev-name">Irlan</strong><br>
+      E-mail: <a href="mailto:iranjuniormax@gmail.com">iranjuniormax@gmail.com</a><br>
+      WhatsApp 🇧🇷: <a href="https://wa.me/5569992535201" target="_blank">+55 69 99253-5201</a>
+    </div>
+  </div>
+
+  <!-- Janela Modal do Usuário -->
+  <div id="modalJanela" class="modal">
+    <div class="modal-content">
+      <span class="fechar" onclick="fecharJanela()">&times;</span>
+      <h3 id="modalTitulo">Rede Social</h3>
+      <p id="modalTexto">Descrição da rede social selecionada.</p>
+      <a id="modalLink" href="#" target="_blank" class="btn-abrir">Ir para o site</a>
+    </div>
+  </div>
+
+  <!-- Janela Modal do Painel de Controle -->
+  <div id="modalAdmin" class="modal">
+    <div class="modal-content">
+      <span class="fechar" onclick="fecharPainel()">&times;</span>
+      <h3 style="color: #f59e0b;">⚙️ Painel de Controle</h3>
+      <p style="font-size: 1rem; margin-bottom: 15px;">Edite o título, adicione ou gerencie as redes sociais:</p>
+      
+      <!-- Edição do Título Central e Cor -->
+      <div class="admin-header-section">
+        <label for="inputTituloCentral">Nome do Aplicativo (Título):</label>
+        <input type="text" id="inputTituloCentral" value="Central de Redes Sociais">
+
+        <label>Cor do Título Principal:</label>
+        <div class="color-picker-box">
+          <input type="color" id="inputCorTitulo" value="#f8fafc">
+          <span>Escolha a cor do texto do título</span>
+        </div>
+      </div>
+
+      <div class="admin-list" id="adminForm">
+        <!-- Campos preenchidos via JS -->
+      </div>
+
+      <button class="btn-add-card" onclick="adicionarNovaRede()">➕ Adicionar Nova Rede Social</button>
+
+      <button class="btn-salvar" onclick="salvarAlteracoesPainel()">Salvar Alterações</button>
+    </div>
+  </div>
+
+  <script>
+    // Dados Padrão (Originais)
+    const redesPadrao = [
+      { id: 'youtube',   nome: 'YouTube',   estilo: 'grad-youtube',   corCustom: '#ff0000', link: 'https://youtube.com',     descricao: 'Assista a vídeos, tutoriais e transmissões ao vivo.' },
+      { id: 'whatsapp',  nome: 'WhatsApp',  estilo: 'grad-whatsapp',  corCustom: '#25d366', link: 'https://web.whatsapp.com', descricao: 'Envie mensagens e faça chamadas com seus amigos.' },
+      { id: 'facebook',  nome: 'Facebook',  estilo: 'grad-facebook',  corCustom: '#1877f2', link: 'https://facebook.com',     descricao: 'Conecte-se com amigos e compartilhe momentos.' },
+      { id: 'instagram', nome: 'Instagram', estilo: 'grad-instagram', corCustom: '#e6683c', link: 'https://instagram.com',    descricao: 'Veja fotos, reels e stories do seu dia a dia.' },
+      { id: 'telegram',  nome: 'Telegram',  estilo: 'grad-telegram',  corCustom: '#0088cc', link: 'https://web.telegram.org', descricao: 'Mensagens rápidas, grupos e canais de notícias.' },
+      { id: 'tiktok',    nome: 'TikTok',    estilo: 'grad-tiktok',    corCustom: '#00f2fe', link: 'https://tiktok.com',      descricao: 'Assista a vídeos curtos, tendências e dancinhas.' },
+      { id: 'kwai',      nome: 'Kwai',      estilo: 'grad-kwai',      corCustom: '#ff8c00', link: 'https://kwai.com',        descricao: 'Vídeos curtos e divertidos para todos os momentos.' }
+    ];
+
+    function carregarRedes() {
+      const dadosSalvos = localStorage.getItem('redes_sociais_data');
+      return dadosSalvos ? JSON.parse(dadosSalvos) : redesPadrao;
+    }
+
+    function carregarTituloConfig() {
+      const configSalva = localStorage.getItem('titulo_config');
+      return configSalva ? JSON.parse(configSalva) : {
+        texto: "Central de Redes Sociais",
+        cor: "#f8fafc"
+      };
+    }
+
+    let redes = carregarRedes();
+    let configTitulo = carregarTituloConfig();
+
+    // Renderizar Tela Principal
+    function renderizarGrid() {
+      const h1Element = document.getElementById('tituloCentral');
+      h1Element.innerText = configTitulo.texto;
+      h1Element.style.color = configTitulo.cor;
+      document.title = configTitulo.texto;
+
+      const grid = document.getElementById('gridRedes');
+      grid.innerHTML = '';
+
+      redes.forEach((rede) => {
+        const card = document.createElement('div');
+        card.className = `card ${rede.estilo || ''}`;
+        
+        if (rede.corCustom) {
+          card.style.background = rede.corCustom;
+        }
+
+        card.onclick = () => abrirJanela(rede.nome, rede.link, rede.descricao);
+        card.innerHTML = `
+          <h2>${rede.nome}</h2>
+          <p>Clique para abrir</p>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Modal do Usuário
+    function abrirJanela(nome, link, descricao) {
+      document.getElementById('modalTitulo').innerText = nome;
+      document.getElementById('modalTexto').innerText = descricao;
+      document.getElementById('modalLink').href = link;
+      document.getElementById('modalJanela').style.display = 'flex';
+    }
+
+    function fecharJanela() {
+      document.getElementById('modalJanela').style.display = 'none';
+    }
+
+    // Modal do Painel de Controle
+    function abrirPainel() {
+      document.getElementById('inputTituloCentral').value = configTitulo.texto;
+      document.getElementById('inputCorTitulo').value = configTitulo.cor || "#f8fafc";
+      renderizarListaAdmin();
+      document.getElementById('modalAdmin').style.display = 'flex';
+    }
+
+    function renderizarListaAdmin() {
+      const form = document.getElementById('adminForm');
+      form.innerHTML = '';
+
+      redes.forEach((rede, index) => {
+        const item = document.createElement('div');
+        item.className = 'admin-item';
+        item.innerHTML = `
+          <div class="admin-item-header">
+            <label>Card #${index + 1}: ${rede.nome}</label>
+            <button class="btn-remover-card" onclick="removerRede(${index})">🗑️ Excluir</button>
+          </div>
+          
+          <label>Nome da Rede Social:</label>
+          <input type="text" id="nome_${index}" value="${rede.nome}">
+          
+          <label>Cor do Card:</label>
+          <div class="color-picker-box">
+            <input type="color" id="cor_${index}" value="${rede.corCustom || '#3b82f6'}">
+            <span>Escolha a cor de fundo</span>
+          </div>
+
+          <label>Link / Endereço:</label>
+          <input type="text" id="link_${index}" value="${rede.link}">
+
+          <label>Descrição:</label>
+          <textarea id="desc_${index}">${rede.descricao}</textarea>
+        `;
+        form.appendChild(item);
+      });
+    }
+
+    // Adicionar Nova Rede Social
+    function adicionarNovaRede() {
+      sincronizarCamposTemp();
+      redes.push({
+        id: 'nova_' + Date.now(),
+        nome: 'Nova Rede',
+        estilo: '',
+        corCustom: '#3b82f6',
+        link: 'https://',
+        descricao: 'Descrição da nova rede social.'
+      });
+      renderizarListaAdmin();
+    }
+
+    // Remover Rede Social
+    function removerRede(index) {
+      sincronizarCamposTemp();
+      redes.splice(index, 1);
+      renderizarListaAdmin();
+    }
+
+    // Sincroniza o array temporário de redes enquanto o usuário edita no painel
+    function sincronizarCamposTemp() {
+      redes.forEach((rede, index) => {
+        const elNome = document.getElementById(`nome_${index}`);
+        const elCor = document.getElementById(`cor_${index}`);
+        const elLink = document.getElementById(`link_${index}`);
+        const elDesc = document.getElementById(`desc_${index}`);
+
+        if (elNome) rede.nome = elNome.value;
+        if (elCor) rede.corCustom = elCor.value;
+        if (elLink) rede.link = elLink.value;
+        if (elDesc) rede.descricao = elDesc.value;
+      });
+    }
+
+    function fecharPainel() {
+      document.getElementById('modalAdmin').style.display = 'none';
+    }
+
+    // Salvar alterações
+    function salvarAlteracoesPainel() {
+      const novoTexto = document.getElementById('inputTituloCentral').value;
+      const novaCorTitulo = document.getElementById('inputCorTitulo').value;
+
+      if (novoTexto.trim() !== '') {
+        configTitulo.texto = novoTexto;
+      }
+      configTitulo.cor = novaCorTitulo;
+
+      localStorage.setItem('titulo_config', JSON.stringify(configTitulo));
+
+      sincronizarCamposTemp();
+
+      localStorage.setItem('redes_sociais_data', JSON.stringify(redes));
+      renderizarGrid();
+      fecharPainel();
+    }
+
+    // Fechar ao clicar fora dos modais
+    window.onclick = function(event) {
+      let modalJanela = document.getElementById('modalJanela');
+      let modalAdmin = document.getElementById('modalAdmin');
+      if (event.target === modalJanela) fecharJanela();
+      if (event.target === modalAdmin) fecharPainel();
+    }
+
+    // Inicialização
+    renderizarGrid();
+  </script>
+
+</body>
+</html>
