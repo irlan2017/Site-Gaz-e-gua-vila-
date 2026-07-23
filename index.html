@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Central de Redes Sociais com Painel de Controle</title>
+  <title>Central de Redes Sociais</title>
   <style>
     * {
       box-sizing: border-box;
@@ -91,28 +91,6 @@
       justify-content: center;
       align-items: center;
       gap: 15px;
-    }
-
-    /* Botão do Painel de Controle BEM DISCRETO E PEQUENO */
-    .btn-admin {
-      background: rgba(255, 255, 255, 0.05);
-      color: #64748b;
-      font-size: 0.85rem;
-      font-weight: 500;
-      padding: 6px 14px;
-      border: 1px solid #334155;
-      border-radius: 6px;
-      cursor: pointer;
-      box-shadow: none;
-      transition: all 0.2s ease;
-      opacity: 0.6;
-    }
-
-    .btn-admin:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #94a3b8;
-      opacity: 1;
-      transform: none;
     }
 
     /* Seção dos Desenvolvedores no Rodapé */
@@ -283,146 +261,6 @@
       color: #ffffff;
     }
 
-    /* Formulários e Inputs do Painel */
-    .admin-header-section {
-      background: #0f172a;
-      border: 1px solid #f59e0b;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .admin-header-section label {
-      font-size: 1rem;
-      color: #f59e0b;
-      font-weight: bold;
-      display: block;
-    }
-
-    .admin-header-section input[type="text"] {
-      width: 100%;
-      background: #1e293b;
-      border: 1px solid #475569;
-      color: #fff;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-
-    .admin-list {
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .admin-item {
-      background: #0f172a;
-      border: 1px solid #334155;
-      padding: 15px;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
-    }
-
-    .admin-item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .admin-item label {
-      font-size: 0.9rem;
-      color: #38bdf8;
-      font-weight: bold;
-    }
-
-    .btn-remover-card {
-      background: #ef4444;
-      color: white;
-      border: none;
-      padding: 4px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-
-    .btn-remover-card:hover {
-      background: #dc2626;
-    }
-
-    .admin-item input, .admin-item textarea {
-      width: 100%;
-      background: #1e293b;
-      border: 1px solid #475569;
-      color: #fff;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-
-    .color-picker-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .color-picker-box input[type="color"] {
-      width: 50px;
-      height: 40px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      background: none;
-    }
-
-    .admin-item textarea {
-      resize: vertical;
-      height: 60px;
-    }
-
-    .btn-add-card {
-      background: #0284c7;
-      color: white;
-      font-size: 1rem;
-      font-weight: bold;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 15px;
-      width: 100%;
-      transition: background 0.2s;
-    }
-
-    .btn-add-card:hover {
-      background: #0369a1;
-    }
-
-    .btn-salvar {
-      background: #22c55e;
-      color: white;
-      font-size: 1.2rem;
-      font-weight: bold;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      margin-top: 20px;
-      width: 100%;
-    }
-
-    .btn-salvar:hover {
-      background: #16a34a;
-    }
-
     /* Ajuste para telas menores */
     @media (max-width: 768px) {
       h1 {
@@ -449,8 +287,6 @@
   </div>
 
   <div class="footer-area">
-    <button class="btn-admin" onclick="abrirPainel()">⚙️ painel de controle</button>
-    
     <!-- Informações dos Desenvolvedores -->
     <div class="developer-info">
       Desenvolvedor: <strong class="dev-name">Irlan</strong><br>
@@ -469,41 +305,12 @@
     </div>
   </div>
 
-  <!-- Janela Modal do Painel de Controle -->
-  <div id="modalAdmin" class="modal">
-    <div class="modal-content">
-      <span class="fechar" onclick="fecharPainel()">&times;</span>
-      <h3 style="color: #f59e0b;">⚙️ Painel de Controle</h3>
-      <p id="adminDescModal" style="font-size: 1rem; margin-bottom: 15px;">Edite o título, adicione ou gerencie as redes sociais:</p>
-      
-      <!-- Edição do Título Central e Cor -->
-      <div class="admin-header-section" id="adminHeaderConfig">
-        <label for="inputTituloCentral">Nome da Seção (Título):</label>
-        <input type="text" id="inputTituloCentral" value="Central de Redes Sociais">
-
-        <label>Cor do Título Principal:</label>
-        <div class="color-picker-box">
-          <input type="color" id="inputCorTitulo" value="#f8fafc">
-          <span>Escolha a cor do texto do título</span>
-        </div>
-      </div>
-
-      <div class="admin-list" id="adminForm">
-        <!-- Campos preenchidos via JS -->
-      </div>
-
-      <button class="btn-add-card" onclick="adicionarNovoItem()">➕ Adicionar Novo Item</button>
-
-      <button class="btn-salvar" onclick="salvarAlteracoesPainel()">Salvar Alterações</button>
-    </div>
-  </div>
-
   <script>
     // Aba Ativa Atual
     let abaAtual = 'redes';
 
     // Dados Padrão (Redes Sociais)
-    const redesPadrao = [
+    const redes = [
       { id: 'youtube',   nome: 'YouTube',   estilo: 'grad-youtube',   corCustom: '#ff0000', link: 'https://youtube.com',     descricao: 'Assista a vídeos, tutoriais e transmissões ao vivo.' },
       { id: 'whatsapp',  nome: 'WhatsApp',  estilo: 'grad-whatsapp',  corCustom: '#25d366', link: 'https://web.whatsapp.com', descricao: 'Envie mensagens e faça chamadas com seus amigos.' },
       { id: 'facebook',  nome: 'Facebook',  estilo: 'grad-facebook',  corCustom: '#1877f2', link: 'https://facebook.com',     descricao: 'Conecte-se com amigos e compartilhe momentos.' },
@@ -520,7 +327,7 @@
     ];
 
     // Dados Padrão (Lojas e Sites)
-    const lojasPadrao = [
+    const lojas = [
       { id: 'magalu',       nome: 'Magalu',        estilo: 'grad-magalu',       corCustom: '#0086ff', link: 'https://www.magazineluiza.com.br', descricao: 'Ofertas em eletrodomésticos, tecnologia e móveis.' },
       { id: 'mercadolivre', nome: 'Mercado Livre', estilo: 'grad-mercadolivre', corCustom: '#ffe600', link: 'https://www.mercadolivre.com.br', descricao: 'O maior marketplace da América Latina com frete grátis.' },
       { id: 'casasbahia',   nome: 'Casas Bahia',   estilo: 'grad-casasbahia',   corCustom: '#0042da', link: 'https://www.casasbahia.com.br',   descricao: 'Tudo em móveis, celulares, eletrodomésticos e utilidades.' },
@@ -534,33 +341,19 @@
     ];
 
     // Dados Padrão (IPTV)
-    const iptvPadrao = [
+    const iptv = [
       { id: 'iptv1', nome: 'Site iptv', estilo: 'grad-iptv', corCustom: '#7c3aed', link: 'https://www.netflix.com',         descricao: 'Acesse nosso site oficial iptv.' }
     ];
 
     // Configurações de Título por Aba
-    const configRedesPadrao = { texto: "Central de Redes Sociais", cor: "#f8fafc" };
-    const configLojasPadrao = { texto: "Lojas e Sites", cor: "#f8fafc" };
-    const configIptvPadrao  = { texto: "IPTV", cor: "#f8fafc" };
-
-    function carregarDados(storageKey, padrao) {
-      const dadosSalvos = localStorage.getItem(storageKey);
-      return dadosSalvos ? JSON.parse(dadosSalvos) : padrao;
-    }
-
-    let redes = carregarDados('redes_sociais_data', redesPadrao);
-    let lojas = carregarDados('lojas_compras_data', lojasPadrao);
-    let iptv  = carregarDados('iptv_data', iptvPadrao);
-    
-    let configRedes = carregarDados('config_redes_titulo', configRedesPadrao);
-    let configLojas = carregarDados('config_lojas_titulo', configLojasPadrao);
-    let configIptv  = carregarDados('config_iptv_titulo', configIptvPadrao);
+    const configRedes = { texto: "Central de Redes Sociais", cor: "#f8fafc" };
+    const configLojas = { texto: "Lojas e Sites", cor: "#f8fafc" };
+    const configIptv  = { texto: "IPTV", cor: "#f8fafc" };
 
     // Mudar de Aba
     function mudarAba(novaAba) {
       abaAtual = novaAba;
       
-      // Atualizar botões visuais das abas
       const botoes = document.querySelectorAll('.tab-btn');
       botoes.forEach(btn => btn.classList.remove('active'));
       
@@ -628,159 +421,10 @@
       document.getElementById('modalJanela').style.display = 'none';
     }
 
-    // Modal do Painel de Controle
-    function abrirPainel() {
-      let configAtual;
-      let nomeSecao;
-
-      if (abaAtual === 'redes') {
-        configAtual = configRedes;
-        nomeSecao = 'redes sociais';
-      } else if (abaAtual === 'lojas') {
-        configAtual = configLojas;
-        nomeSecao = 'lojas e sites';
-      } else if (abaAtual === 'iptv') {
-        configAtual = configIptv;
-        nomeSecao = 'IPTV';
-      }
-
-      document.getElementById('inputTituloCentral').value = configAtual.texto;
-      document.getElementById('inputCorTitulo').value = configAtual.cor || "#f8fafc";
-      
-      document.getElementById('adminDescModal').innerText = `Gerencie o título e os itens da aba de ${nomeSecao}:`;
-
-      renderizarListaAdmin();
-      document.getElementById('modalAdmin').style.display = 'flex';
-    }
-
-    function renderizarListaAdmin() {
-      const form = document.getElementById('adminForm');
-      form.innerHTML = '';
-
-      let itensAtuais;
-      if (abaAtual === 'redes') itensAtuais = redes;
-      else if (abaAtual === 'lojas') itensAtuais = lojas;
-      else if (abaAtual === 'iptv') itensAtuais = iptv;
-
-      itensAtuais.forEach((item, index) => {
-        const divItem = document.createElement('div');
-        divItem.className = 'admin-item';
-        divItem.innerHTML = `
-          <div class="admin-item-header">
-            <label>Item #${index + 1}: ${item.nome}</label>
-            <button class="btn-remover-card" onclick="removerItem(${index})">🗑️ Excluir</button>
-          </div>
-          
-          <label>Nome do Item:</label>
-          <input type="text" id="nome_${index}" value="${item.nome}">
-          
-          <label>Cor do Card:</label>
-          <div class="color-picker-box">
-            <input type="color" id="cor_${index}" value="${item.corCustom || '#3b82f6'}">
-            <span>Escolha a cor de fundo</span>
-          </div>
-
-          <label>Link / Endereço:</label>
-          <input type="text" id="link_${index}" value="${item.link}">
-
-          <label>Descrição:</label>
-          <textarea id="desc_${index}">${item.descricao}</textarea>
-        `;
-        form.appendChild(divItem);
-      });
-    }
-
-    // Adicionar Novo Item na aba ativa
-    function adicionarNovoItem() {
-      sincronizarCamposTemp();
-      let itensAtuais;
-      let nomeNovo;
-      if (abaAtual === 'redes') { itensAtuais = redes; nomeNovo = 'Nova Rede'; }
-      else if (abaAtual === 'lojas') { itensAtuais = lojas; nomeNovo = 'Novo Site'; }
-      else if (abaAtual === 'iptv') { itensAtuais = iptv; nomeNovo = 'Novo Canal'; }
-
-      itensAtuais.push({
-        id: 'novo_' + Date.now(),
-        nome: nomeNovo,
-        estilo: '',
-        corCustom: '#3b82f6',
-        link: 'https://',
-        descricao: 'Descrição detalhada do site.'
-      });
-      renderizarListaAdmin();
-    }
-
-    // Remover Item
-    function removerItem(index) {
-      sincronizarCamposTemp();
-      let itensAtuais;
-      if (abaAtual === 'redes') itensAtuais = redes;
-      else if (abaAtual === 'lojas') itensAtuais = lojas;
-      else if (abaAtual === 'iptv') itensAtuais = iptv;
-
-      itensAtuais.splice(index, 1);
-      renderizarListaAdmin();
-    }
-
-    // Sincroniza campos temporários do painel
-    function sincronizarCamposTemp() {
-      let itensAtuais;
-      if (abaAtual === 'redes') itensAtuais = redes;
-      else if (abaAtual === 'lojas') itensAtuais = lojas;
-      else if (abaAtual === 'iptv') itensAtuais = iptv;
-
-      itensAtuais.forEach((item, index) => {
-        const elNome = document.getElementById(`nome_${index}`);
-        const elCor = document.getElementById(`cor_${index}`);
-        const elLink = document.getElementById(`link_${index}`);
-        const elDesc = document.getElementById(`desc_${index}`);
-
-        if (elNome) item.nome = elNome.value;
-        if (elCor) item.corCustom = elCor.value;
-        if (elLink) item.link = elLink.value;
-        if (elDesc) item.descricao = elDesc.value;
-      });
-    }
-
-    function fecharPainel() {
-      document.getElementById('modalAdmin').style.display = 'none';
-    }
-
-    // Salvar alterações do Painel
-    function salvarAlteracoesPainel() {
-      const novoTexto = document.getElementById('inputTituloCentral').value;
-      const novaCorTitulo = document.getElementById('inputCorTitulo').value;
-
-      if (abaAtual === 'redes') {
-        if (novoTexto.trim() !== '') configRedes.texto = novoTexto;
-        configRedes.cor = novaCorTitulo;
-        localStorage.setItem('config_redes_titulo', JSON.stringify(configRedes));
-        sincronizarCamposTemp();
-        localStorage.setItem('redes_sociais_data', JSON.stringify(redes));
-      } else if (abaAtual === 'lojas') {
-        if (novoTexto.trim() !== '') configLojas.texto = novoTexto;
-        configLojas.cor = novaCorTitulo;
-        localStorage.setItem('config_lojas_titulo', JSON.stringify(configLojas));
-        sincronizarCamposTemp();
-        localStorage.setItem('lojas_compras_data', JSON.stringify(lojas));
-      } else if (abaAtual === 'iptv') {
-        if (novoTexto.trim() !== '') configIptv.texto = novoTexto;
-        configIptv.cor = novaCorTitulo;
-        localStorage.setItem('config_iptv_titulo', JSON.stringify(configIptv));
-        sincronizarCamposTemp();
-        localStorage.setItem('iptv_data', JSON.stringify(iptv));
-      }
-
-      renderizarGrid();
-      fecharPainel();
-    }
-
-    // Fechar ao clicar fora dos modais
+    // Fechar ao clicar fora do modal
     window.onclick = function(event) {
       let modalJanela = document.getElementById('modalJanela');
-      let modalAdmin = document.getElementById('modalAdmin');
       if (event.target === modalJanela) fecharJanela();
-      if (event.target === modalAdmin) fecharPainel();
     }
 
     // Inicialização
