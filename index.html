@@ -26,14 +26,50 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       width: 100%;
       max-width: 1200px;
     }
 
+    /* Abas de Navegação */
+    .tabs-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      justify-content: center;
+      width: 100%;
+      max-width: 1200px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .tab-btn:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: #ffffff;
+      border-color: #60a5fa;
+      box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+    }
+
     /* Título com letras EXTRA GRANDES */
     h1 {
-      font-size: 6rem;
+      font-size: 5rem;
       font-weight: 900;
       color: #f8fafc;
       text-shadow: 0 8px 20px rgba(0,0,0,0.6);
@@ -151,7 +187,7 @@
       margin-top: 15px;
     }
 
-    /* Cores das Redes Sociais Padrão */
+    /* Cores das Redes Sociais Padrão e Novas */
     .grad-youtube   { background: linear-gradient(135deg, #ff0000, #cc0000); }
     .grad-whatsapp  { background: linear-gradient(135deg, #25d366, #128c7e); }
     .grad-facebook  { background: linear-gradient(135deg, #1877f2, #0d52b1); }
@@ -159,6 +195,27 @@
     .grad-telegram  { background: linear-gradient(135deg, #0088cc, #005580); }
     .grad-tiktok    { background: linear-gradient(135deg, #00f2fe, #4facfe, #ff0050); }
     .grad-kwai      { background: linear-gradient(135deg, #ff8c00, #ff4500); }
+    .grad-twitter   { background: linear-gradient(135deg, #1da1f2, #0c85d0); }
+    .grad-linkedin  { background: linear-gradient(135deg, #0a66c2, #004182); }
+    .grad-pinterest { background: linear-gradient(135deg, #bd081c, #8c0613); }
+    .grad-threads   { background: linear-gradient(135deg, #262626, #000000); }
+    .grad-discord   { background: linear-gradient(135deg, #5865f2, #404eed); }
+    .grad-twitch    { background: linear-gradient(135deg, #9146ff, #772ce8); }
+
+    /* Cores das Lojas e Sites */
+    .grad-magalu       { background: linear-gradient(135deg, #0086ff, #0048b3); }
+    .grad-mercadolivre { background: linear-gradient(135deg, #ffe600, #ffcc00); color: #000 !important; }
+    .grad-casasbahia   { background: linear-gradient(135deg, #0042da, #002277); }
+    .grad-amazon       { background: linear-gradient(135deg, #ff9900, #e68a00); color: #000 !important; }
+    .grad-shopee       { background: linear-gradient(135deg, #ee4d2d, #c73211); }
+    .grad-americanas   { background: linear-gradient(135deg, #e60014, #99000d); }
+    .grad-shein        { background: linear-gradient(135deg, #222222, #000000); }
+    .grad-aliexpress   { background: linear-gradient(135deg, #ff4747, #cc0000); }
+    .grad-centauro     { background: linear-gradient(135deg, #ff6600, #cc5200); }
+    .grad-netshoes     { background: linear-gradient(135deg, #ff6600, #b84700); }
+
+    /* Cores de IPTV */
+    .grad-iptv         { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
 
     /* Janelas Popups */
     .modal {
@@ -369,12 +426,19 @@
     /* Ajuste para telas menores */
     @media (max-width: 768px) {
       h1 {
-        font-size: 3.5rem;
+        font-size: 3.2rem;
       }
     }
   </style>
 </head>
 <body>
+
+  <!-- Abas de Navegação -->
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="mudarAba('redes')">📱 Redes Sociais</button>
+    <button class="tab-btn" onclick="mudarAba('lojas')">🛒 Lojas e Sites</button>
+    <button class="tab-btn" onclick="mudarAba('iptv')">📺 IPTV</button>
+  </div>
 
   <div class="header-area">
     <h1 id="tituloCentral">Central de Redes Sociais</h1>
@@ -410,11 +474,11 @@
     <div class="modal-content">
       <span class="fechar" onclick="fecharPainel()">&times;</span>
       <h3 style="color: #f59e0b;">⚙️ Painel de Controle</h3>
-      <p style="font-size: 1rem; margin-bottom: 15px;">Edite o título, adicione ou gerencie as redes sociais:</p>
+      <p id="adminDescModal" style="font-size: 1rem; margin-bottom: 15px;">Edite o título, adicione ou gerencie as redes sociais:</p>
       
       <!-- Edição do Título Central e Cor -->
-      <div class="admin-header-section">
-        <label for="inputTituloCentral">Nome do Aplicativo (Título):</label>
+      <div class="admin-header-section" id="adminHeaderConfig">
+        <label for="inputTituloCentral">Nome da Seção (Título):</label>
         <input type="text" id="inputTituloCentral" value="Central de Redes Sociais">
 
         <label>Cor do Título Principal:</label>
@@ -428,14 +492,17 @@
         <!-- Campos preenchidos via JS -->
       </div>
 
-      <button class="btn-add-card" onclick="adicionarNovaRede()">➕ Adicionar Nova Rede Social</button>
+      <button class="btn-add-card" onclick="adicionarNovoItem()">➕ Adicionar Novo Item</button>
 
       <button class="btn-salvar" onclick="salvarAlteracoesPainel()">Salvar Alterações</button>
     </div>
   </div>
 
   <script>
-    // Dados Padrão (Originais)
+    // Aba Ativa Atual
+    let abaAtual = 'redes';
+
+    // Dados Padrão (Redes Sociais)
     const redesPadrao = [
       { id: 'youtube',   nome: 'YouTube',   estilo: 'grad-youtube',   corCustom: '#ff0000', link: 'https://youtube.com',     descricao: 'Assista a vídeos, tutoriais e transmissões ao vivo.' },
       { id: 'whatsapp',  nome: 'WhatsApp',  estilo: 'grad-whatsapp',  corCustom: '#25d366', link: 'https://web.whatsapp.com', descricao: 'Envie mensagens e faça chamadas com seus amigos.' },
@@ -443,46 +510,106 @@
       { id: 'instagram', nome: 'Instagram', estilo: 'grad-instagram', corCustom: '#e6683c', link: 'https://instagram.com',    descricao: 'Veja fotos, reels e stories do seu dia a dia.' },
       { id: 'telegram',  nome: 'Telegram',  estilo: 'grad-telegram',  corCustom: '#0088cc', link: 'https://web.telegram.org', descricao: 'Mensagens rápidas, grupos e canais de notícias.' },
       { id: 'tiktok',    nome: 'TikTok',    estilo: 'grad-tiktok',    corCustom: '#00f2fe', link: 'https://tiktok.com',      descricao: 'Assista a vídeos curtos, tendências e dancinhas.' },
-      { id: 'kwai',      nome: 'Kwai',      estilo: 'grad-kwai',      corCustom: '#ff8c00', link: 'https://kwai.com',        descricao: 'Vídeos curtos e divertidos para todos os momentos.' }
+      { id: 'kwai',      nome: 'Kwai',      estilo: 'grad-kwai',      corCustom: '#ff8c00', link: 'https://kwai.com',        descricao: 'Vídeos curtos e divertidos para todos os momentos.' },
+      { id: 'twitter',   nome: 'X (Twitter)', estilo: 'grad-twitter', corCustom: '#1da1f2', link: 'https://twitter.com',       descricao: 'Acompanhe as notícias de última hora e discussões globais.' },
+      { id: 'linkedin',  nome: 'LinkedIn',  estilo: 'grad-linkedin',  corCustom: '#0a66c2', link: 'https://linkedin.com',     descricao: 'Sua rede profissional para conexões de carreira e vagas.' },
+      { id: 'pinterest', nome: 'Pinterest', estilo: 'grad-pinterest', corCustom: '#bd081c', link: 'https://pinterest.com',    descricao: 'Encontre ideias criativas, inspirações e receitas.' },
+      { id: 'threads',   nome: 'Threads',   estilo: 'grad-threads',   corCustom: '#262626', link: 'https://www.threads.net',  descricao: 'Compartilhe ideias e conversas em texto com o público.' },
+      { id: 'discord',   nome: 'Discord',   estilo: 'grad-discord',   corCustom: '#5865f2', link: 'https://discord.com',      descricao: 'Comunidades, chats de voz e servidores de jogos.' },
+      { id: 'twitch',    nome: 'Twitch',    estilo: 'grad-twitch',    corCustom: '#9146ff', link: 'https://twitch.tv',        descricao: 'Plataforma líder em transmissões ao vivo de games e criadores.' }
     ];
 
-    function carregarRedes() {
-      const dadosSalvos = localStorage.getItem('redes_sociais_data');
-      return dadosSalvos ? JSON.parse(dadosSalvos) : redesPadrao;
+    // Dados Padrão (Lojas e Sites)
+    const lojasPadrao = [
+      { id: 'magalu',       nome: 'Magalu',        estilo: 'grad-magalu',       corCustom: '#0086ff', link: 'https://www.magazineluiza.com.br', descricao: 'Ofertas em eletrodomésticos, tecnologia e móveis.' },
+      { id: 'mercadolivre', nome: 'Mercado Livre', estilo: 'grad-mercadolivre', corCustom: '#ffe600', link: 'https://www.mercadolivre.com.br', descricao: 'O maior marketplace da América Latina com frete grátis.' },
+      { id: 'casasbahia',   nome: 'Casas Bahia',   estilo: 'grad-casasbahia',   corCustom: '#0042da', link: 'https://www.casasbahia.com.br',   descricao: 'Tudo em móveis, celulares, eletrodomésticos e utilidades.' },
+      { id: 'amazon',       nome: 'Amazon',        estilo: 'grad-amazon',       corCustom: '#ff9900', link: 'https://www.amazon.com.br',       descricao: 'Livros, eletrônicos, casa e assinaturas Prime.' },
+      { id: 'shopee',       nome: 'Shopee',        estilo: 'grad-shopee',       corCustom: '#ee4d2d', link: 'https://shopee.com.br',           descricao: 'Milhares de itens com descontos e cupons diários.' },
+      { id: 'americanas',   nome: 'Americanas',    estilo: 'grad-americanas',   corCustom: '#e60014', link: 'https://www.americanas.com.br',   descricao: 'Tudo o que você precisa em tecnologia, casa e lazer.' },
+      { id: 'shein',        nome: 'Shein',         estilo: 'grad-shein',        corCustom: '#222222', link: 'https://www.shein.com.br',        descricao: 'Moda feminina, masculina, infantil e acessórios com ótimos preços.' },
+      { id: 'aliexpress',   nome: 'AliExpress',    estilo: 'grad-aliexpress',   corCustom: '#ff4747', link: 'https://www.netflix.com',       descricao: 'Variedade imensa de produtos importados, eletrônicos e mais.' },
+      { id: 'centauro',     nome: 'Centauro',      estilo: 'grad-centauro',     corCustom: '#ff6600', link: 'https://www.centauro.com.br',     descricao: 'Artigos esportivos, tênis, camisas de time e acessórios.' },
+      { id: 'netshoes',     nome: 'Netshoes',      estilo: 'grad-netshoes',     corCustom: '#b84700', link: 'https://www.netshoes.com.br',     descricao: 'Esporte, moda e lazer com as melhores marcas do mercado.' }
+    ];
+
+    // Dados Padrão (IPTV)
+    const iptvPadrao = [
+      { id: 'iptv1', nome: 'Site iptv', estilo: 'grad-iptv', corCustom: '#7c3aed', link: 'https://www.netflix.com',         descricao: 'Acesse nosso site oficial iptv.' }
+    ];
+
+    // Configurações de Título por Aba
+    const configRedesPadrao = { texto: "Central de Redes Sociais", cor: "#f8fafc" };
+    const configLojasPadrao = { texto: "Lojas e Sites", cor: "#f8fafc" };
+    const configIptvPadrao  = { texto: "IPTV", cor: "#f8fafc" };
+
+    function carregarDados(storageKey, padrao) {
+      const dadosSalvos = localStorage.getItem(storageKey);
+      return dadosSalvos ? JSON.parse(dadosSalvos) : padrao;
     }
 
-    function carregarTituloConfig() {
-      const configSalva = localStorage.getItem('titulo_config');
-      return configSalva ? JSON.parse(configSalva) : {
-        texto: "Central de Redes Sociais",
-        cor: "#f8fafc"
-      };
-    }
+    let redes = carregarDados('redes_sociais_data', redesPadrao);
+    let lojas = carregarDados('lojas_compras_data', lojasPadrao);
+    let iptv  = carregarDados('iptv_data', iptvPadrao);
+    
+    let configRedes = carregarDados('config_redes_titulo', configRedesPadrao);
+    let configLojas = carregarDados('config_lojas_titulo', configLojasPadrao);
+    let configIptv  = carregarDados('config_iptv_titulo', configIptvPadrao);
 
-    let redes = carregarRedes();
-    let configTitulo = carregarTituloConfig();
+    // Mudar de Aba
+    function mudarAba(novaAba) {
+      abaAtual = novaAba;
+      
+      // Atualizar botões visuais das abas
+      const botoes = document.querySelectorAll('.tab-btn');
+      botoes.forEach(btn => btn.classList.remove('active'));
+      
+      if (novaAba === 'redes') {
+        botoes[0].classList.add('active');
+      } else if (novaAba === 'lojas') {
+        botoes[1].classList.add('active');
+      } else if (novaAba === 'iptv') {
+        botoes[2].classList.add('active');
+      }
+
+      renderizarGrid();
+    }
 
     // Renderizar Tela Principal
     function renderizarGrid() {
       const h1Element = document.getElementById('tituloCentral');
-      h1Element.innerText = configTitulo.texto;
-      h1Element.style.color = configTitulo.cor;
-      document.title = configTitulo.texto;
+      let configAtual;
+      let itensAtuais;
+
+      if (abaAtual === 'redes') {
+        configAtual = configRedes;
+        itensAtuais = redes;
+      } else if (abaAtual === 'lojas') {
+        configAtual = configLojas;
+        itensAtuais = lojas;
+      } else if (abaAtual === 'iptv') {
+        configAtual = configIptv;
+        itensAtuais = iptv;
+      }
+
+      h1Element.innerText = configAtual.texto;
+      h1Element.style.color = configAtual.cor;
+      document.title = configAtual.texto;
 
       const grid = document.getElementById('gridRedes');
       grid.innerHTML = '';
 
-      redes.forEach((rede) => {
+      itensAtuais.forEach((item) => {
         const card = document.createElement('div');
-        card.className = `card ${rede.estilo || ''}`;
+        card.className = `card ${item.estilo || ''}`;
         
-        if (rede.corCustom) {
-          card.style.background = rede.corCustom;
+        if (item.corCustom) {
+          card.style.background = item.corCustom;
         }
 
-        card.onclick = () => abrirJanela(rede.nome, rede.link, rede.descricao);
+        card.onclick = () => abrirJanela(item.nome, item.link, item.descricao);
         card.innerHTML = `
-          <h2>${rede.nome}</h2>
+          <h2>${item.nome}</h2>
           <p>Clique para abrir</p>
         `;
         grid.appendChild(card);
@@ -503,8 +630,25 @@
 
     // Modal do Painel de Controle
     function abrirPainel() {
-      document.getElementById('inputTituloCentral').value = configTitulo.texto;
-      document.getElementById('inputCorTitulo').value = configTitulo.cor || "#f8fafc";
+      let configAtual;
+      let nomeSecao;
+
+      if (abaAtual === 'redes') {
+        configAtual = configRedes;
+        nomeSecao = 'redes sociais';
+      } else if (abaAtual === 'lojas') {
+        configAtual = configLojas;
+        nomeSecao = 'lojas e sites';
+      } else if (abaAtual === 'iptv') {
+        configAtual = configIptv;
+        nomeSecao = 'IPTV';
+      }
+
+      document.getElementById('inputTituloCentral').value = configAtual.texto;
+      document.getElementById('inputCorTitulo').value = configAtual.cor || "#f8fafc";
+      
+      document.getElementById('adminDescModal').innerText = `Gerencie o título e os itens da aba de ${nomeSecao}:`;
+
       renderizarListaAdmin();
       document.getElementById('modalAdmin').style.display = 'flex';
     }
@@ -513,67 +657,88 @@
       const form = document.getElementById('adminForm');
       form.innerHTML = '';
 
-      redes.forEach((rede, index) => {
-        const item = document.createElement('div');
-        item.className = 'admin-item';
-        item.innerHTML = `
+      let itensAtuais;
+      if (abaAtual === 'redes') itensAtuais = redes;
+      else if (abaAtual === 'lojas') itensAtuais = lojas;
+      else if (abaAtual === 'iptv') itensAtuais = iptv;
+
+      itensAtuais.forEach((item, index) => {
+        const divItem = document.createElement('div');
+        divItem.className = 'admin-item';
+        divItem.innerHTML = `
           <div class="admin-item-header">
-            <label>Card #${index + 1}: ${rede.nome}</label>
-            <button class="btn-remover-card" onclick="removerRede(${index})">🗑️ Excluir</button>
+            <label>Item #${index + 1}: ${item.nome}</label>
+            <button class="btn-remover-card" onclick="removerItem(${index})">🗑️ Excluir</button>
           </div>
           
-          <label>Nome da Rede Social:</label>
-          <input type="text" id="nome_${index}" value="${rede.nome}">
+          <label>Nome do Item:</label>
+          <input type="text" id="nome_${index}" value="${item.nome}">
           
           <label>Cor do Card:</label>
           <div class="color-picker-box">
-            <input type="color" id="cor_${index}" value="${rede.corCustom || '#3b82f6'}">
+            <input type="color" id="cor_${index}" value="${item.corCustom || '#3b82f6'}">
             <span>Escolha a cor de fundo</span>
           </div>
 
           <label>Link / Endereço:</label>
-          <input type="text" id="link_${index}" value="${rede.link}">
+          <input type="text" id="link_${index}" value="${item.link}">
 
           <label>Descrição:</label>
-          <textarea id="desc_${index}">${rede.descricao}</textarea>
+          <textarea id="desc_${index}">${item.descricao}</textarea>
         `;
-        form.appendChild(item);
+        form.appendChild(divItem);
       });
     }
 
-    // Adicionar Nova Rede Social
-    function adicionarNovaRede() {
+    // Adicionar Novo Item na aba ativa
+    function adicionarNovoItem() {
       sincronizarCamposTemp();
-      redes.push({
-        id: 'nova_' + Date.now(),
-        nome: 'Nova Rede',
+      let itensAtuais;
+      let nomeNovo;
+      if (abaAtual === 'redes') { itensAtuais = redes; nomeNovo = 'Nova Rede'; }
+      else if (abaAtual === 'lojas') { itensAtuais = lojas; nomeNovo = 'Novo Site'; }
+      else if (abaAtual === 'iptv') { itensAtuais = iptv; nomeNovo = 'Novo Canal'; }
+
+      itensAtuais.push({
+        id: 'novo_' + Date.now(),
+        nome: nomeNovo,
         estilo: '',
         corCustom: '#3b82f6',
         link: 'https://',
-        descricao: 'Descrição da nova rede social.'
+        descricao: 'Descrição detalhada do site.'
       });
       renderizarListaAdmin();
     }
 
-    // Remover Rede Social
-    function removerRede(index) {
+    // Remover Item
+    function removerItem(index) {
       sincronizarCamposTemp();
-      redes.splice(index, 1);
+      let itensAtuais;
+      if (abaAtual === 'redes') itensAtuais = redes;
+      else if (abaAtual === 'lojas') itensAtuais = lojas;
+      else if (abaAtual === 'iptv') itensAtuais = iptv;
+
+      itensAtuais.splice(index, 1);
       renderizarListaAdmin();
     }
 
-    // Sincroniza o array temporário de redes enquanto o usuário edita no painel
+    // Sincroniza campos temporários do painel
     function sincronizarCamposTemp() {
-      redes.forEach((rede, index) => {
+      let itensAtuais;
+      if (abaAtual === 'redes') itensAtuais = redes;
+      else if (abaAtual === 'lojas') itensAtuais = lojas;
+      else if (abaAtual === 'iptv') itensAtuais = iptv;
+
+      itensAtuais.forEach((item, index) => {
         const elNome = document.getElementById(`nome_${index}`);
         const elCor = document.getElementById(`cor_${index}`);
         const elLink = document.getElementById(`link_${index}`);
         const elDesc = document.getElementById(`desc_${index}`);
 
-        if (elNome) rede.nome = elNome.value;
-        if (elCor) rede.corCustom = elCor.value;
-        if (elLink) rede.link = elLink.value;
-        if (elDesc) rede.descricao = elDesc.value;
+        if (elNome) item.nome = elNome.value;
+        if (elCor) item.corCustom = elCor.value;
+        if (elLink) item.link = elLink.value;
+        if (elDesc) item.descricao = elDesc.value;
       });
     }
 
@@ -581,21 +746,31 @@
       document.getElementById('modalAdmin').style.display = 'none';
     }
 
-    // Salvar alterações
+    // Salvar alterações do Painel
     function salvarAlteracoesPainel() {
       const novoTexto = document.getElementById('inputTituloCentral').value;
       const novaCorTitulo = document.getElementById('inputCorTitulo').value;
 
-      if (novoTexto.trim() !== '') {
-        configTitulo.texto = novoTexto;
+      if (abaAtual === 'redes') {
+        if (novoTexto.trim() !== '') configRedes.texto = novoTexto;
+        configRedes.cor = novaCorTitulo;
+        localStorage.setItem('config_redes_titulo', JSON.stringify(configRedes));
+        sincronizarCamposTemp();
+        localStorage.setItem('redes_sociais_data', JSON.stringify(redes));
+      } else if (abaAtual === 'lojas') {
+        if (novoTexto.trim() !== '') configLojas.texto = novoTexto;
+        configLojas.cor = novaCorTitulo;
+        localStorage.setItem('config_lojas_titulo', JSON.stringify(configLojas));
+        sincronizarCamposTemp();
+        localStorage.setItem('lojas_compras_data', JSON.stringify(lojas));
+      } else if (abaAtual === 'iptv') {
+        if (novoTexto.trim() !== '') configIptv.texto = novoTexto;
+        configIptv.cor = novaCorTitulo;
+        localStorage.setItem('config_iptv_titulo', JSON.stringify(configIptv));
+        sincronizarCamposTemp();
+        localStorage.setItem('iptv_data', JSON.stringify(iptv));
       }
-      configTitulo.cor = novaCorTitulo;
 
-      localStorage.setItem('titulo_config', JSON.stringify(configTitulo));
-
-      sincronizarCamposTemp();
-
-      localStorage.setItem('redes_sociais_data', JSON.stringify(redes));
       renderizarGrid();
       fecharPainel();
     }
