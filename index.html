@@ -1,1266 +1,392 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comercial Ávila - Disk Gás e Água</title>
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: #f0f4f8;
-      color: #222;
-      padding: 20px;
-    }
-
-    .nome-empresa {
-      display: block;
-      text-align: center;
-      width: 100%;
-      margin: 0 auto 20px auto;
-      font-size: clamp(2.4rem, 7.5vw, 6.5rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: clamp(2px, 1vw, 10px);
-      line-height: 1.05;
-      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-      word-wrap: break-word;
-    }
-
-    .c1  { color: #e53935; }
-    .c2  { color: #fb8c00; }
-    .c3  { color: #fdd835; }
-    .c4  { color: #43a047; }
-    .c5  { color: #00acc1; }
-    .c6  { color: #1e88e5; }
-    .c7  { color: #3949ab; }
-    .c8  { color: #8e24aa; }
-    .c9  { color: #d81b60; }
-    .c10 { color: #ff5722; }
-    .c11 { color: #009688; }
-    .c12 { color: #7cb342; }
-    .c13 { color: #e91e63; }
-    .c14 { color: #0288d1; }
-
-    header {
-      background: linear-gradient(135deg, #0052cc, #0080ff);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      border-radius: 16px;
-      margin-bottom: 25px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    }
-
-    header h1 {
-      font-size: 1.9rem;
-      margin-bottom: 6px;
-    }
-
-    header p {
-      font-size: 1.1rem;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    @media (min-width: 900px) {
-      .container {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-      }
-    }
-
-    .produtos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .card-produto {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border: 4px solid transparent;
-      transition: transform 0.2s;
-    }
-
-    .card-produto:hover {
-      transform: translateY(-5px);
-    }
-
-    .card-gas {
-      border-color: #ff5722;
-      background: #fff5f2;
-    }
-
-    .card-agua {
-      border-color: #0288d1;
-      background: #f0f8ff;
-    }
-
-    .card-registro {
-      border-color: #4caf50;
-      background: #f1f8e9;
-    }
-
-    .card-produto img {
-      width: 100%;
-      height: 180px;
-      object-fit: contain;
-      margin-bottom: 15px;
-      border-radius: 10px;
-    }
-
-    .card-produto h3 {
-      font-size: 1.6rem;
-      margin-bottom: 10px;
-      color: #111;
-    }
-
-    .preco {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #d32f2f;
-      margin: 12px 0;
-    }
-
-    .btn-adicionar {
-      background-color: #ff9800;
-      color: white;
-      border: none;
-      padding: 14px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
-      transition: background 0.2s;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .btn-adicionar:hover {
-      background-color: #e68a00;
-    }
-
-    .painel-lateral {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .box-janela {
-      background: white;
-      padding: 22px;
-      border-radius: 20px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    }
-
-    .box-carrinho {
-      border: 3px solid #e91e63;
-    }
-
-    .box-endereco {
-      border: 3px solid #9c27b0;
-    }
-
-    .box-pagamento {
-      border: 3px solid #009688;
-    }
-
-    .box-janela h2 {
-      font-size: 1.6rem;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .carrinho-lista {
-      list-style: none;
-      margin-bottom: 15px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .carrinho-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px dashed #ccc;
-      font-size: 1.1rem;
-    }
-
-    .carrinho-item button {
-      background: #ff1744;
-      color: white;
-      border: none;
-      padding: 4px 8px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .total-container {
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-align: right;
-      color: #2e7d32;
-      margin-top: 10px;
-    }
-
-    .form-group {
-      margin-bottom: 12px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 1.1rem;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 12px;
-      font-size: 1.1rem;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      background-color: white;
-    }
-
-    .form-group input:focus, .form-group select:focus {
-      border-color: #9c27b0;
-      outline: none;
-    }
-
-    .area-pix {
-      display: none;
-      background-color: #e0f2f1;
-      border: 2px dashed #00897b;
-      padding: 15px;
-      border-radius: 12px;
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .area-pix img {
-      width: 170px;
-      height: 170px;
-      margin: 10px 0;
-      border: 3px solid white;
-      border-radius: 8px;
-      object-fit: contain;
-    }
-
-    .btn-copiar {
-      background-color: #00897b;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 5px;
-    }
-
-    .btn-finalizar {
-      width: 100%;
-      background-color: #2e7d32;
-      color: white;
-      border: none;
-      padding: 16px;
-      font-size: 1.4rem;
-      font-weight: bold;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
-      margin-top: 15px;
-    }
-
-    .btn-finalizar:hover {
-      background-color: #1b5e20;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 30px;
-      padding: 15px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      width: 100%;
-    }
-
-    .footer-linha-principal {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .btn-admin-discreto {
-      background: transparent;
-      border: none;
-      color: #888;
-      font-size: 0.85rem;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-
-    .btn-admin-discreto:hover {
-      color: #3f51b5;
-    }
-
-    .controle-audio {
-      background: #e2e8f0;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 1.1rem;
-      color: #475569;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: background 0.2s;
-    }
-
-    .controle-audio:hover {
-      background: #cbd5e1;
-    }
-
-    .footer-desenvolvedor {
-      font-size: 0.95rem;
-      color: #8e24aa;
-      font-weight: 600;
-      text-align: center;
-      width: 100%;
-      padding-top: 10px;
-      border-top: 1px solid #cbd5e1;
-    }
-
-    .footer-desenvolvedor span, .footer-desenvolvedor a {
-      color: #8e24aa;
-      text-decoration: none;
-      margin: 0 5px;
-    }
-
-    .modal-admin {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-conteudo {
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-      width: 96%;
-      max-width: 800px;
-      max-height: 92vh;
-      overflow-y: auto;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
-      position: relative;
-    }
-
-    .fechar-modal {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #aaa;
-      cursor: pointer;
-    }
-
-    .fechar-modal:hover {
-      color: #000;
-    }
-
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
-      font-size: 0.95rem;
-    }
-
-    .btn-salvar-admin, .btn-login-admin, .btn-accordion, .btn-recuperar {
-      background-color: #3f51b5;
-      color: white;
-      border: none;
-      padding: 12px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 10px;
-      width: 100%;
-    }
-
-    .btn-recuperar {
-      background-color: #0288d1;
-    }
-
-    .alerta-erro-senha {
-      display: none;
-      background-color: #ffebee;
-      color: #c62828;
-      border: 1px solid #ef9a9a;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 15px;
-      text-align: center;
-      font-size: 1rem;
-    }
-
-    .btn-esqueci {
-      background: #ff9800;
-      color: white;
-      border: none;
-      padding: 10px;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 8px;
-      display: block;
-      width: 100%;
-    }
-
-    .btn-accordion {
-      background-color: #f1f5f9;
-      color: #1e293b;
-      border: 2px solid #cbd5e1;
-      text-align: left;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 18px;
-      margin-top: 15px;
-      border-radius: 8px;
-      font-size: 1.15rem;
-    }
-
-    .conteudo-accordion {
-      display: none;
-      background: #fafafa;
-      padding: 20px;
-      border: 1px solid #e2e8f0;
-      border-top: none;
-      border-radius: 0 0 8px 8px;
-      margin-bottom: 10px;
-    }
-
-    .pedido-card-adm {
-      background: #fff8e1;
-      border: 4px solid #ffb300;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .pedido-card-adm h4 {
-      font-size: 1.6rem;
-      color: #d32f2f;
-      margin-bottom: 8px;
-    }
-
-    .pedido-card-adm p {
-      font-size: 1.25rem;
-      color: #111;
-      margin-bottom: 6px;
-      line-height: 1.4;
-    }
-
-    .pedido-card-adm .destaque-total {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #2e7d32;
-      margin-top: 10px;
-    }
-
-    .btn-remover-pedido {
-      background-color: #d32f2f;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 12px;
-    }
-
-    .acoes-lote-adm {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      padding: 10px 14px;
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-    }
-
-    .btn-excluir-todos {
-      background-color: #c62828;
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartão de Visita Digital | Corretor de Imóveis de Luxo</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            color: #ffffff;
+        }
+
+        /* Overlay escuro para contraste */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 30px 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .container.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Topo / Perfil */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-img-container {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, #D4AF37, #FFF5C0);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #111;
+        }
+
+        .profile-header h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-header h2 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #D4AF37;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .bio-text {
+            font-size: 0.85rem;
+            color: #e0e0e0;
+            font-weight: 300;
+            line-height: 1.4;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        /* Grid de Ações Rápidas */
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 15px;
+            border-radius: 12px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn i {
+            font-size: 1.1rem;
+            color: #D4AF37;
+        }
+
+        .action-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #D4AF37;
+            transform: scale(1.03);
+        }
+
+        /* Botão de Destaque / Salvar Contato */
+        .save-contact-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #D4AF37, #AA7C11);
+            color: #000000;
+            text-align: center;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .save-contact-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+            background: linear-gradient(135deg, #E5C158, #C49216);
+        }
+
+        /* Destaque de Imóvel */
+        .property-highlight {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .property-highlight:hover {
+            transform: scale(1.01);
+        }
+
+        .property-badge {
+            background: #D4AF37;
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .property-img-container {
+            position: relative;
+            width: 100%;
+            height: 140px;
+        }
+
+        .property-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .property-info {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .property-details h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+
+        .property-details p {
+            font-size: 0.8rem;
+            color: #D4AF37;
+            font-weight: 500;
+        }
+
+        .property-btn {
+            background: transparent;
+            border: 1px solid #D4AF37;
+            color: #D4AF37;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .property-btn:hover {
+            background: #D4AF37;
+            color: #000;
+        }
+
+        /* Rodapé */
+        .footer {
+            text-align: center;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .social-icons a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: #D4AF37;
+            color: #000000;
+            border-color: #D4AF37;
+            transform: scale(1.1);
+        }
+
+        .copyright {
+            font-size: 0.7rem;
+            color: #888888;
+            letter-spacing: 0.5px;
+        }
+    </style>
 </head>
 <body>
 
-  <audio id="musica-fundo" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    Seu navegador não suporta elemento de áudio.
-  </audio>
-
-  <div class="nome-empresa">
-    <span class="c1">C</span><span class="c2">O</span><span class="c3">M</span><span class="c4">E</span><span class="c5">R</span><span class="c6">C</span><span class="c7">I</span><span class="c8">A</span><span class="c9">L</span>
-    &nbsp;
-    <span class="c10">Á</span><span class="c11">V</span><span class="c12">I</span><span class="c13">L</span><span class="c14">A</span>
-  </div>
-
-  <header>
-    <h1>🔥 DISK GÁS & ÁGUA 💧</h1>
-    <p>Entregas rápidas no seu bairro!</p>
-  </header>
-
-  <div class="container">
-    <section class="produtos-grid">
-      <div class="card-produto card-gas">
-        <div>
-          <img src="https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&w=500&q=80" alt="Botija de Gás 13kg">
-          <h3>Botija de Gás 13kg</h3>
-          <p class="preco" id="exibicao-preco-gas">R$ 115,00</p>
-        </div>
-        <button class="btn-adicionar" onclick="adicionarAoCarrinho('Botija de Gás 13kg', precos.gas)">➕ ADICIONAR</button>
-      </div>
-
-      <div class="card-produto card-agua">
-        <div>
-          <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=500&q=80" alt="Galão de Água 20L">
-          <h3>Galão de Água 20L</h3>
-          <p class="preco" id="exibicao-preco-agua">R$ 18,00</p>
-        </div>
-        <button class="btn-adicionar" onclick="adicionarAoCarrinho('Galão de Água 20L', precos.agua)">➕ ADICIONAR</button>
-      </div>
-
-      <div class="card-produto card-registro">
-        <div>
-          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80" alt="Registro de Fogão">
-          <h3>Registro de Fogão</h3>
-          <p class="preco" id="exibicao-preco-registro">R$ 65,00</p>
-        </div>
-        <button class="btn-adicionar" onclick="adicionarAoCarrinho('Registro de Fogão', precos.registro)">➕ ADICIONAR</button>
-      </div>
-    </section>
-
-    <aside class="painel-lateral">
-      <div class="box-janela box-carrinho">
-        <h2>🛒 Meu Carrinho</h2>
-        <ul id="carrinho-lista" class="carrinho-lista">
-          <li style="color: #666; font-size: 1rem;">O carrinho está vazio.</li>
-        </ul>
-        <div class="total-container">
-          Total: R$ <span id="valor-total">0,00</span>
-        </div>
-      </div>
-
-      <form id="form-pedido" onsubmit="finalizarPedido(event)">
-        <div class="box-janela box-endereco" style="margin-bottom: 20px;">
-          <h2>📍 Endereço de Entrega</h2>
-            
-          <div class="form-group">
-            <label for="nome">Nome Completo:</label>
-            <input type="text" id="nome" required placeholder="Digite seu nome completo">
-          </div>
-
-          <div class="form-group">
-            <label for="tipo-residencia">Tipo de Residência:</label>
-            <select id="tipo-residencia" required onchange="gerenciarTipoResidencia()">
-              <option value="">-- Selecione o tipo --</option>
-              <option value="Casa">Casa</option>
-              <option value="Apartamento">Apartamento</option>
-              <option value="Condomínio">Condomínio</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="rua">Rua / Avenida:</label>
-            <input type="text" id="rua" required placeholder="Nome da rua ou avenida">
-          </div>
-
-          <div class="form-group">
-            <label for="numero">Número:</label>
-            <input type="text" id="numero" required placeholder="Número do imóvel">
-          </div>
-
-          <div class="form-group">
-            <label for="bairro">Bairro:</label>
-            <input type="text" id="bairro" required placeholder="Nome do bairro">
-          </div>
-
-          <div class="form-group" id="grupo-bloco" style="display: none;">
-            <label for="bloco">Bloco (Se houver):</label>
-            <input type="text" id="bloco" placeholder="Ex: Bloco B">
-          </div>
-
-          <div class="form-group" id="grupo-apartamento" style="display: none;">
-            <label for="apartamento">Apartamento (Se houver):</label>
-            <input type="text" id="apartamento" placeholder="Ex: Apto 204">
-          </div>
-
-          <div class="form-group">
-            <label for="referencia">Ponto de Referência:</label>
-            <input type="text" id="referencia" placeholder="Ex: Próximo à padaria / casa verde">
-          </div>
-        </div>
-
-        <div id="secao-pagamento" class="box-janela box-pagamento">
-          <h2>💳 Forma de Pagamento</h2>
-
-          <div class="form-group">
-            <label for="pagamento">Escolha a Forma de Pagamento:</label>
-            <select id="pagamento" required onchange="gerenciarOpcoesPagamento()">
-              <option value="">-- Selecione uma opção --</option>
-              <option id="opt-dinheiro" value="Dinheiro">Dinheiro</option>
-              <option id="opt-pix" value="Pix">Pix</option>
-              <option id="opt-cartao" value="Cartão">Cartão</option>
-            </select>
-          </div>
-
-          <div id="area-pix" class="area-pix">
-            <p><strong>Escaneie o QR Code abaixo com o app do seu banco:</strong></p>
-            <img id="img-qrcode" src="" alt="QR Code PIX">
-            <p style="font-size: 0.9rem; color: #333;">Chave PIX:</p>
-            <input type="text" id="chave-pix" readonly style="text-align: center; margin-top: 5px; font-weight: bold;">
-            <button type="button" class="btn-copiar" onclick="copiarChavePix()">📋 Copiar Chave PIX</button>
-          </div>
-
-          <div class="form-group" id="grupo-troco" style="display: none; margin-top: 10px;">
-            <label for="troco">Precisa de troco para quanto?</label>
-            <input type="number" id="troco" step="0.01" placeholder="Ex: 150.00 (deixe vazio se não precisar)">
-          </div>
-
-          <button type="submit" id="btn-submit-pedido" class="btn-finalizar">✅ FINALIZAR PEDIDO</button>
-        </div>
-      </form>
-    </aside>
-  </div>
-
-  <footer>
-    <div class="footer-linha-principal">
-      <button type="button" class="controle-audio" id="btn-audio" onclick="alternarAudio()">🔊 Silenciar Música</button>
-      <button type="button" class="btn-admin-discreto" onclick="abrirModalAdmin()">⚙️ Área do Administrador</button>
-    </div>
-    <div class="footer-desenvolvedor">
-      Desenvolvedor: <span>IrLan</span> | WhatsApp: <a href="https://wa.me/5569992535201" target="_blank">+55 69 99253-5201</a>
-    </div>
-  </footer>
-
-  <div id="modal-admin" class="modal-admin">
-    <div class="modal-conteudo">
-      <span class="fechar-modal" onclick="fecharModalAdmin()">&times;</span>
-      <h3 style="margin-bottom: 20px; font-size: 2rem;">⚙️ Painel de Controle (ADM)</h3>
-
-      <div id="admin-login">
-        <div class="form-group">
-          <label for="senha-admin" style="font-size: 1.1rem;">🔑 Digite a Senha:</label>
-          <input type="password" id="senha-admin" placeholder="Senha" style="padding: 12px; font-size: 1.1rem;" onkeypress="verificarTeclaEnter(event)">
-        </div>
-        <button type="button" class="btn-login-admin" onclick="autenticarAdmin()">ENTRAR</button>
-        
-        <div id="alerta-erro-senha" class="alerta-erro-senha">
-          ❌ <strong>Senha incorreta!</strong> Deseja recuperar sua senha?
-          <button type="button" class="btn-esqueci" onclick="mostrarTelaEsqueciSenha()">🔑 Esqueci a Senha</button>
-        </div>
-      </div>
-
-      <div id="admin-recuperacao" style="display: none;">
-        <p style="font-size: 1.1rem; margin-bottom: 15px; color: #333;">Digite o WhatsApp cadastrado para receber o código de recuperação:</p>
-        <div class="form-group">
-          <label for="whatsapp-recuperacao" style="font-size: 1.1rem;">📱 WhatsApp Cadastrado:</label>
-          <input type="text" id="whatsapp-recuperacao" placeholder="Ex: 5569992535201" style="padding: 12px; font-size: 1.1rem;">
-        </div>
-        <button type="button" class="btn-recuperar" onclick="enviarCodigoRecuperacao()">📤 Enviar Código pelo WhatsApp</button>
-        
-        <div id="bloco-validar-codigo" style="display: none; margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px;">
-          <div class="form-group">
-            <label for="codigo-digitado" style="font-size: 1.1rem;">🔢 Digite o Código Recebido:</label>
-            <input type="text" id="codigo-digitado" placeholder="Código de 4 dígitos" style="padding: 12px; font-size: 1.1rem;">
-          </div>
-          <button type="button" class="btn-salvar-admin" onclick="verificarCodigoRecuperacao()">✅ Confirmar Código</button>
-        </div>
-
-        <button type="button" class="btn-esqueci" onclick="voltarParaLogin()" style="margin-top: 15px; text-align: center; background: #3f51b5;">Voltar para o Login</button>
-      </div>
-
-      <div id="admin-conteudo" style="display: none;">
-        <button type="button" class="btn-accordion" onclick="alternarAccordion('bloco-pedidos-recebidos')" style="background-color: #fffae6; border-color: #ffb300;">
-          <span style="font-size: 1.25rem; font-weight: bold; color: #b71c1c;">📋 Pedidos Recebidos dos Clientes</span>
-          <span id="icone-bloco-pedidos-recebidos">▼</span>
-        </button>
-        <div id="bloco-pedidos-recebidos" class="conteudo-accordion">
-          <div id="acoes-lote" class="acoes-lote-adm" style="display: none;">
-            <div class="checkbox-group" style="margin: 0; font-weight: bold;">
-              <input type="checkbox" id="selecionar-todos-pedidos" onclick="toggleSelecionarTodos(this)">
-              <label for="selecionar-todos-pedidos" style="margin: 0; cursor: pointer;">Selecionar Todos</label>
+    <div class="container" id="cardContainer">
+        <!-- Topo / Perfil -->
+        <div class="profile-header">
+            <div class="profile-img-container">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300&auto=format&fit=crop" alt="Foto do Corretor" class="profile-img">
             </div>
-            <button type="button" class="btn-excluir-todos" onclick="excluirSelecionados()">🗑️ Excluir Selecionados</button>
-          </div>
-          <div id="lista-pedidos-adm">
-            <p style="font-size: 1.2rem; color: #666; text-align: center; padding: 20px;">Nenhum pedido recebido no momento.</p>
-          </div>
+            <h1>Arthur Vance</h1>
+            <h2>Corretor de Imóveis de Luxo</h2>
+            <p class="bio-text">Transformando sonhos em endereços exclusivos.</p>
         </div>
 
-        <button type="button" class="btn-accordion" onclick="alternarAccordion('bloco-precos')">
-          <span>💲 Editar Preços dos Produtos</span>
-          <span id="icone-bloco-precos">▼</span>
-        </button>
-        <div id="bloco-precos" class="conteudo-accordion">
-          <div class="form-group" style="margin-bottom: 12px;">
-            <label style="font-size: 1rem;">Gás 13kg:</label>
-            <input type="number" id="admin-preco-gas" step="0.01" style="padding: 10px; font-size: 1.1rem;">
-          </div>
-          <div class="form-group" style="margin-bottom: 12px;">
-            <label style="font-size: 1rem;">Água 20L:</label>
-            <input type="number" id="admin-preco-agua" step="0.01" style="padding: 10px; font-size: 1.1rem;">
-          </div>
-          <div class="form-group" style="margin-bottom: 12px;">
-            <label style="font-size: 1rem;">Registro de Fogão:</label>
-            <input type="number" id="admin-preco-registro" step="0.01" style="padding: 10px; font-size: 1.1rem;">
-          </div>
+        <!-- Botões de Ação Rápida -->
+        <div class="action-grid">
+            <a href="https://wa.me/5511999999999" target="_blank" class="action-btn">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="https://waze.com/ul" target="_blank" class="action-btn">
+                <i class="fa-solid fa-location-dot"></i> Localização
+            </a>
+            <a href="mailto:contato@arthurvance.com" class="action-btn">
+                <i class="fa-solid fa-envelope"></i> E-mail
+            </a>
+            <a href="https://example.com" target="_blank" class="action-btn">
+                <i class="fa-solid fa-globe"></i> Portfólio
+            </a>
         </div>
 
-        <button type="button" class="btn-accordion" onclick="alternarAccordion('bloco-pagamentos')">
-          <span>💳 Formas de Pagamento e Chave PIX</span>
-          <span id="icone-bloco-pagamentos">▼</span>
-        </button>
-        <div id="bloco-pagamentos" class="conteudo-accordion">
-          <p style="font-weight: bold; margin-bottom: 8px; font-size: 1rem; color: #303f9f;">Opções Ativas:</p>
-          <div class="checkbox-group" style="font-size: 1.05rem;">
-            <input type="checkbox" id="admin-pay-dinheiro" checked>
-            <label for="admin-pay-dinheiro">Dinheiro</label>
-          </div>
-          <div class="checkbox-group" style="font-size: 1.05rem;">
-            <input type="checkbox" id="admin-pay-pix" checked>
-            <label for="admin-pay-pix">Pix</label>
-          </div>
-          <div class="checkbox-group" style="margin-bottom: 15px; font-size: 1.05rem;">
-            <input type="checkbox" id="admin-pay-cartao" checked>
-            <label for="admin-pay-cartao">Cartão</label>
-          </div>
+        <!-- Botão de Destaque: Salvar Contato -->
+        <a href="#" id="saveContactBtn" class="save-contact-btn">
+            <i class="fa-solid fa-user-plus"></i> Salvar na Agenda
+        </a>
 
-          <p style="font-weight: bold; margin-bottom: 8px; font-size: 1rem; color: #303f9f;">Configurar PIX e QR Code:</p>
-          <div class="form-group" style="margin-bottom: 12px;">
-            <label style="font-size: 1rem;">Chave PIX da Loja:</label>
-            <input type="text" id="admin-chave-pix" style="padding: 10px; font-size: 1.1rem;">
-          </div>
-          <div class="form-group" style="margin-bottom: 12px;">
-            <label style="font-size: 1rem;">Link / URL do QR Code (Imagem):</label>
-            <input type="text" id="admin-url-qrcode" placeholder="Link da imagem (ou deixe em branco)" style="padding: 10px; font-size: 1.1rem;">
-          </div>
+        <!-- Destaque de Imóvel -->
+        <div class="property-highlight">
+            <div class="property-img-container">
+                <span class="property-badge">Oportunidade do Mês</span>
+                <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=600&auto=format&fit=crop" alt="Mansão de Luxo" class="property-img">
+            </div>
+            <div class="property-info">
+                <div class="property-details">
+                    <h3>Mansão Alphaville</h3>
+                    <p>R$ 12.500.000</p>
+                </div>
+                <a href="#detalhes" class="property-btn">Ver Detalhes</a>
+            </div>
         </div>
 
-        <button type="button" class="btn-salvar-admin" onclick="salvarConfiguracoesAdmin()" style="margin-top: 20px;">💾 SALVAR ALTERAÇÕES</button>
-      </div>
+        <!-- Rodapé -->
+        <footer class="footer">
+            <div class="social-icons">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://linkedin.com" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            </div>
+            <p class="copyright">&copy; 2026 Arthur Vance. Todos os direitos reservados.</p>
+        </footer>
     </div>
-  </div>
 
-  <script>
-    const SENHA_CORRETA = "92535201";
-    const WHATSAPP_ADMIN = "5569992535201";
-    let codigoGeradoSistema = "";
-
-    let configSalva = JSON.parse(localStorage.getItem('avila_config_global')) || {
-      precos: {
-        gas: 115.00,
-        agua: 18.00,
-        registro: 65.00
-      },
-      pagamentosAtivos: {
-        dinheiro: true,
-        pix: true,
-        cartao: true
-      },
-      chavePix: "(69) 99253-5201",
-      urlQrCode: ""
-    };
-
-    let precos = configSalva.precos;
-    let carrinho = JSON.parse(localStorage.getItem('avila_carrinho')) || [];
-    let pedidosRecebidos = JSON.parse(localStorage.getItem('avila_pedidos_recebidos')) || [];
-
-    window.addEventListener('DOMContentLoaded', () => {
-      aplicarConfiguracoesIniciais();
-      atualizarCarrinho();
-
-      const musica = document.getElementById('musica-fundo');
-      musica.volume = 0.07;
-      musica.play().catch(() => {
-        document.body.addEventListener('click', () => {
-          if (musica.paused) {
-            musica.play();
-          }
-        }, { once: true });
-      });
-    });
-
-    function aplicarConfiguracoesIniciais() {
-      document.getElementById('exibicao-preco-gas').innerText = `R$ ${precos.gas.toFixed(2).replace('.', ',')}`;
-      document.getElementById('exibicao-preco-agua').innerText = `R$ ${precos.agua.toFixed(2).replace('.', ',')}`;
-      document.getElementById('exibicao-preco-registro').innerText = `R$ ${precos.registro.toFixed(2).replace('.', ',')}`;
-
-      document.getElementById('admin-preco-gas').value = precos.gas;
-      document.getElementById('admin-preco-agua').value = precos.agua;
-      document.getElementById('admin-preco-registro').value = precos.registro;
-
-      document.getElementById('chave-pix').value = configSalva.chavePix;
-      document.getElementById('admin-chave-pix').value = configSalva.chavePix;
-      document.getElementById('admin-url-qrcode').value = configSalva.urlQrCode;
-
-      if (configSalva.urlQrCode && configSalva.urlQrCode.trim() !== "") {
-        document.getElementById('img-qrcode').src = configSalva.urlQrCode;
-      } else {
-        document.getElementById('img-qrcode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(configSalva.chavePix)}`;
-      }
-
-      document.getElementById('admin-pay-dinheiro').checked = configSalva.pagamentosAtivos.dinheiro;
-      document.getElementById('admin-pay-pix').checked = configSalva.pagamentosAtivos.pix;
-      document.getElementById('admin-pay-cartao').checked = configSalva.pagamentosAtivos.cartao;
-
-      document.getElementById('opt-dinheiro').style.display = configSalva.pagamentosAtivos.dinheiro ? 'block' : 'none';
-      document.getElementById('opt-pix').style.display = configSalva.pagamentosAtivos.pix ? 'block' : 'none';
-      document.getElementById('opt-cartao').style.display = configSalva.pagamentosAtivos.cartao ? 'block' : 'none';
-    }
-
-    function alternarAudio() {
-      const musica = document.getElementById('musica-fundo');
-      const btnAudio = document.getElementById('btn-audio');
-      if (musica.paused) {
-        musica.play();
-        btnAudio.innerHTML = "🔊 Silenciar Música";
-      } else {
-        musica.pause();
-        btnAudio.innerHTML = "🔇 Tocar Música";
-      }
-    }
-
-    function abrirModalAdmin() {
-      document.getElementById('admin-login').style.display = 'block';
-      document.getElementById('admin-recuperacao').style.display = 'none';
-      document.getElementById('admin-conteudo').style.display = 'none';
-      document.getElementById('senha-admin').value = '';
-      document.getElementById('alerta-erro-senha').style.display = 'none';
-      document.getElementById('whatsapp-recuperacao').value = '';
-      document.getElementById('codigo-digitado').value = '';
-      document.getElementById('bloco-validar-codigo').style.display = 'none';
-      fecharTodosAccordions();
-      document.getElementById('modal-admin').style.display = 'flex';
-    }
-
-    function fecharModalAdmin() {
-      document.getElementById('modal-admin').style.display = 'none';
-      document.getElementById('admin-login').style.display = 'block';
-      document.getElementById('admin-recuperacao').style.display = 'none';
-      document.getElementById('admin-conteudo').style.display = 'none';
-      document.getElementById('senha-admin').value = '';
-      document.getElementById('alerta-erro-senha').style.display = 'none';
-      fecharTodosAccordions();
-    }
-
-    function mostrarTelaEsqueciSenha() {
-      document.getElementById('admin-login').style.display = 'none';
-      document.getElementById('admin-recuperacao').style.display = 'block';
-    }
-
-    function voltarParaLogin() {
-      document.getElementById('admin-recuperacao').style.display = 'none';
-      document.getElementById('admin-login').style.display = 'block';
-      document.getElementById('alerta-erro-senha').style.display = 'none';
-      document.getElementById('senha-admin').value = '';
-    }
-
-    function enviarCodigoRecuperacao() {
-      const whatsappInformado = document.getElementById('whatsapp-recuperacao').value.trim();
-      if (whatsappInformado !== WHATSAPP_ADMIN) {
-        alert("❌ Número de WhatsApp não confere com o cadastrado no sistema!");
-        return;
-      }
-
-      codigoGeradoSistema = Math.floor(1000 + Math.random() * 9000).toString();
-      const mensagem = `🔐 *RECUPERAÇÃO DE SENHA - PAINEL ADM*\n\nSeu código de verificação é: *${codigoGeradoSistema}*\n\nInsira este código na tela para acessar o painel.`;
-      const urlWhats = `https://api.whatsapp.com/send?phone=${WHATSAPP_ADMIN}&text=${encodeURIComponent(mensagem)}`;
-      
-      window.open(urlWhats, '_blank');
-      document.getElementById('bloco-validar-codigo').style.display = 'block';
-      alert("✅ Código gerado e redirecionado para o WhatsApp cadastrado!");
-    }
-
-    function verificarCodigoRecuperacao() {
-      const codigoDigitado = document.getElementById('codigo-digitado').value.trim();
-      if (codigoDigitado === codigoGeradoSistema && codigoGeradoSistema !== "") {
-        alert(`✅ Código confirmado com sucesso!\n\nSua senha atual do painel é: ${SENHA_CORRETA}`);
-        document.getElementById('admin-recuperacao').style.display = 'none';
-        document.getElementById('admin-conteudo').style.display = 'block';
-        atualizarVisualizatorPedidosAdm();
-      } else {
-        alert("❌ Código incorreto! Verifique o número digitado.");
-      }
-    }
-
-    function alternarAccordion(idBloco) {
-      const bloco = document.getElementById(idBloco);
-      const icone = document.getElementById('icone-' + idBloco);
-      
-      if (bloco.style.display === 'block') {
-        bloco.style.display = 'none';
-        icone.innerText = '▼';
-      } else {
-        bloco.style.display = 'block';
-        icone.innerText = '▲';
-      }
-    }
-
-    function fecharTodosAccordions() {
-      ['bloco-pedidos-recebidos', 'bloco-precos', 'bloco-pagamentos'].forEach(id => {
-        const bloco = document.getElementById(id);
-        const icone = document.getElementById('icone-' + id);
-        if (bloco && icone) {
-          bloco.style.display = 'none';
-          icone.innerText = '▼';
-        }
-      });
-    }
-
-    function autenticarAdmin() {
-      const senhaInput = document.getElementById('senha-admin').value;
-      if (senhaInput === SENHA_CORRETA) {
-        document.getElementById('alerta-erro-senha').style.display = 'none';
-        document.getElementById('admin-login').style.display = 'none';
-        document.getElementById('admin-conteudo').style.display = 'block';
-        atualizarVisualizatorPedidosAdm();
-      } else {
-        document.getElementById('alerta-erro-senha').style.display = 'block';
-        document.getElementById('senha-admin').value = '';
-      }
-    }
-
-    function verificarTeclaEnter(event) {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        autenticarAdmin();
-      }
-    }
-
-    function adicionarAoCarrinho(nome, preco) {
-      carrinho.push({ nome, preco });
-      localStorage.setItem('avila_carrinho', JSON.stringify(carrinho));
-      atualizarCarrinho();
-      document.getElementById('secao-pagamento').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function removerDoCarrinho(index) {
-      carrinho.splice(index, 1);
-      localStorage.setItem('avila_carrinho', JSON.stringify(carrinho));
-      atualizarCarrinho();
-    }
-
-    function atualizarCarrinho() {
-      const listaElement = document.getElementById('carrinho-lista');
-      const totalElement = document.getElementById('valor-total');
-      
-      listaElement.innerHTML = '';
-      let total = 0;
-
-      if (carrinho.length === 0) {
-        listaElement.innerHTML = '<li style="color: #666; font-size: 1rem;">O carrinho está vazio.</li>';
-      } else {
-        carrinho.forEach((item, index) => {
-          total += item.preco;
-          const li = document.createElement('li');
-          li.className = 'carrinho-item';
-          li.innerHTML = `<span>${item.nome} - R$ ${item.preco.toFixed(2).replace('.', ',')}</span> <button type="button" onclick="removerDoCarrinho(${index})">X</button>`;
-          listaElement.appendChild(li);
+    <!-- JavaScript Básico -->
+    <script>
+        // Animação de Fade In ao carregar a página
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('cardContainer');
+            setTimeout(() => {
+                container.classList.add('fade-in');
+            }, 150);
         });
-      }
 
-      totalElement.innerText = total.toFixed(2).replace('.', ',');
-    }
+        // Simulação da função vCard para o botão "Salvar na Agenda"
+        document.getElementById('saveContactBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:Arthur Vance
+TITLE:Corretor de Imóveis de Luxo
+TEL;TYPE=WORK,VOICE:+5511999999999
+EMAIL:contato@arthurvance.com
+URL:https://example.com
+END:VCARD`;
 
-    function gerenciarTipoResidencia() {
-      const tipoResidencia = document.getElementById('tipo-residencia').value;
-      const grupoBloco = document.getElementById('grupo-bloco');
-      const grupoApartamento = document.getElementById('grupo-apartamento');
-
-      if (tipoResidencia === 'Apartamento') {
-        grupoBloco.style.display = 'block';
-        grupoApartamento.style.display = 'block';
-      } else {
-        grupoBloco.style.display = 'none';
-        grupoApartamento.style.display = 'none';
-        document.getElementById('bloco').value = '';
-        document.getElementById('apartamento').value = '';
-      }
-    }
-
-    function gerenciarOpcoesPagamento() {
-      const opcao = document.getElementById('pagamento').value;
-      const campoTroco = document.getElementById('grupo-troco');
-      const areaPix = document.getElementById('area-pix');
-      
-      if (opcao === 'Pix') {
-        areaPix.style.display = 'block';
-      } else {
-        areaPix.style.display = 'none';
-      }
-
-      if (opcao === 'Dinheiro') {
-        campoTroco.style.display = 'block';
-      } else {
-        campoTroco.style.display = 'none';
-        document.getElementById('troco').value = '';
-      }
-    }
-
-    function copiarChavePix() {
-      const chaveInput = document.getElementById('chave-pix');
-      chaveInput.select();
-      chaveInput.setSelectionRange(0, 99999);
-      navigator.clipboard.writeText(chaveInput.value);
-      alert("Chave PIX copiada para a área de transferência!");
-    }
-
-    function finalizarPedido(event) {
-      event.preventDefault();
-
-      if (carrinho.length === 0) {
-        alert('Por favor, adicione pelo menos um item ao carrinho antes de finalizar!');
-        return;
-      }
-
-      const btnSubmit = document.getElementById('btn-submit-pedido');
-      btnSubmit.disabled = true;
-      btnSubmit.innerText = "⏳ ENVIANDO PEDIDO...";
-
-      const nome = document.getElementById('nome').value;
-      const tipoResidencia = document.getElementById('tipo-residencia').value;
-      const rua = document.getElementById('rua').value;
-      const numero = document.getElementById('numero').value;
-      const bairro = document.getElementById('bairro').value;
-      const bloco = document.getElementById('bloco').value;
-      const apartamento = document.getElementById('apartamento').value;
-      const referencia = document.getElementById('referencia').value;
-      const formaPagamento = document.getElementById('pagamento').value;
-      const trocoPara = document.getElementById('troco').value;
-      const totalValor = document.getElementById('valor-total').innerText;
-
-      const dataHoraAtual = new Date().toLocaleString('pt-BR');
-
-      const novoPedidoAdm = {
-        id: Date.now(),
-        dataHora: dataHoraAtual,
-        nomeCliente: nome,
-        tipoResidencia: tipoResidencia,
-        rua: rua,
-        numero: numero,
-        bairro: bairro,
-        bloco: bloco,
-        apartamento: apartamento,
-        referencia: referencia,
-        itens: [...carrinho],
-        pagamento: formaPagamento,
-        troco: trocoPara ? `R$ ${parseFloat(trocoPara).toFixed(2).replace('.', ',')}` : '',
-        total: totalValor
-      };
-      
-      pedidosRecebidos.push(novoPedidoAdm);
-      localStorage.setItem('avila_pedidos_recebidos', JSON.stringify(pedidosRecebidos));
-
-      let itensTexto = carrinho.map(item => `• ${item.nome}: R$ ${item.preco.toFixed(2).replace('.', ',')}`).join('\n');
-
-      let textoMensagem = `*🧾 DELIVERY COMERCIAL ÁVILA* 🛒\n\n` +
-                          `🕒 *Data/Hora:* ${dataHoraAtual}\n` +
-                          `👤 *Cliente:* ${nome}\n` +
-                          `🏠 *Tipo de Residência:* ${tipoResidencia}\n` +
-                          `📍 *Rua/Avenida:* ${rua}\n` +
-                          `🔢 *Número:* ${numero}\n` +
-                          `🏘️ *Bairro:* ${bairro}\n` +
-                          (bloco ? `🏢 *Bloco:* ${bloco}\n` : '') +
-                          (apartamento ? `🚪 *Apartamento:* ${apartamento}\n` : '') +
-                          (referencia ? `📌 *Referência:* ${referencia}\n` : '') +
-                          `\n🛍️ *Itens do Pedido:*\n${itensTexto}\n\n` +
-                          `💳 *Pagamento:* ${formaPagamento}\n` +
-                          (formaPagamento === 'Dinheiro' && trocoPara ? `💵 *Troco para:* R$ ${parseFloat(trocoPara).toFixed(2).replace('.', ',')}\n` : '') +
-                          `💰 *TOTAL DO PEDIDO:* R$ ${totalValor}\n\n` +
-                          `(_Preparando Seu Pedido Para Entrega_)\n\n*AGRADECEMOS A PREFERÊNCIA!* 😍`;
-
-      const urlWhatsAppWeb = `https://api.whatsapp.com/send?phone=5569992535201&text=${encodeURIComponent(textoMensagem)}`;
-
-      window.open(urlWhatsAppWeb, '_blank');
-      concluirEnvioSucesso(nome, totalValor);
-      
-      btnSubmit.disabled = false;
-      btnSubmit.innerText = "✅ FINALIZAR PEDIDO";
-    }
-
-    function concluirEnvioSucesso(nome, totalValor) {
-      alert(`🎉 Pedido finalizado com sucesso!\n\nCliente: ${nome}\nTotal: R$ ${totalValor}\n\n(_Enviando Seu Pedido e Endereço Local_)`);
-      carrinho = [];
-      localStorage.removeItem('avila_carrinho');
-      atualizarCarrinho();
-      document.getElementById('form-pedido').reset();
-      gerenciarTipoResidencia();
-      gerenciarOpcoesPagamento();
-    }
-
-    function atualizarVisualizatorPedidosAdm() {
-      const containerPedidos = document.getElementById('lista-pedidos-adm');
-      const boxAcoesLote = document.getElementById('acoes-lote');
-      const checkboxTodos = document.getElementById('selecionar-todos-pedidos');
-      
-      if (!containerPedidos) return;
-
-      if (checkboxTodos) checkboxTodos.checked = false;
-
-      if (pedidosRecebidos.length === 0) {
-        if (boxAcoesLote) boxAcoesLote.style.display = 'none';
-        containerPedidos.innerHTML = '<p style="font-size: 1.2rem; color: #666; text-align: center; padding: 20px;">Nenhum pedido recebido no momento.</p>';
-        return;
-      }
-
-      if (boxAcoesLote) boxAcoesLote.style.display = 'flex';
-
-      let htmlCards = '';
-      pedidosRecebidos.forEach(p => {
-        let itensStr = p.itens.map(i => `• ${i.nome} (R$ ${i.preco.toFixed(2).replace('.', ',')})`).join('<br>');
-        htmlCards += `
-          <div class="pedido-card-adm">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-              <h4 style="margin: 0;">🕒 ${p.dataHora}</h4>
-              <div class="checkbox-group" style="margin: 0;">
-                <input type="checkbox" class="check-pedido-item" data-id="${p.id}" style="width: 20px; height: 20px; cursor: pointer;">
-              </div>
-            </div>
-            <p><strong>👤 Cliente:</strong> ${p.nomeCliente}</p>
-            <p><strong>🏠 Residência:</strong> ${p.tipoResidencia}</p>
-            <p><strong>📍 Rua/Avenida:</strong> ${p.rua}, Nº ${p.numero}</p>
-            <p><strong>🏘️ Bairro:</strong> ${p.bairro}</p>
-            ${p.bloco ? `<p><strong>🏢 Bloco:</strong> ${p.bloco}</p>` : ''}
-            ${p.apartamento ? `<p><strong>🚪 Apartamento:</strong> ${p.apartamento}</p>` : ''}
-            ${p.referencia ? `<p><strong>📌 Referência:</strong> ${p.referencia}</p>` : ''}
-            <p><strong>🛍️ Itens:</strong><br>${itensStr}</p>
-            <p><strong>💳 Pagamento:</strong> ${p.pagamento} ${p.troco ? '(Troco para: ' + p.troco + ')' : ''}</p>
-            <p class="destaque-total">💰 TOTAL: R$ ${p.total}</p>
-            <button type="button" class="btn-remover-pedido" onclick="removerPedidoAdm(${p.id})">❌ Excluir / Concluir Pedido</button>
-          </div>
-        `;
-      });
-      containerPedidos.innerHTML = htmlCards;
-    }
-
-    function toggleSelecionarTodos(masterCheckbox) {
-      const checkboxes = document.querySelectorAll('.check-pedido-item');
-      checkboxes.forEach(cb => {
-        cb.checked = masterCheckbox.checked;
-      });
-    }
-
-    function removerPedidoAdm(id) {
-      const pedidoParaExcluir = pedidosRecebidos.find(p => p.id === id);
-      if (!pedidoParaExcluir) return;
-
-      const primeiraConfirmacao = confirm(`Deseja realmente excluir este pedido do cliente ${pedidoParaExcluir.nomeCliente}?`);
-      if (primeiraConfirmacao) {
-        pedidosRecebidos = pedidosRecebidos.filter(p => p.id !== id);
-        localStorage.setItem('avila_pedidos_recebidos', JSON.stringify(pedidosRecebidos));
-        atualizarVisualizatorPedidosAdm();
-      }
-    }
-
-    function excluirSelecionados() {
-      const checkboxesSelecionados = document.querySelectorAll('.check-pedido-item:checked');
-      
-      if (checkboxesSelecionados.length === 0) {
-        alert("Nenhum pedido foi selecionado!");
-        return;
-      }
-
-      const primeiraConfirmacao = confirm(`Deseja realmente excluir os ${checkboxesSelecionados.length} pedidos selecionados?`);
-      if (primeiraConfirmacao) {
-        const idsParaExcluir = Array.from(checkboxesSelecionados).map(cb => Number(cb.getAttribute('data-id')));
-        pedidosRecebidos = pedidosRecebidos.filter(p => !idsParaExcluir.includes(p.id));
-        localStorage.setItem('avila_pedidos_recebidos', JSON.stringify(pedidosRecebidos));
-        atualizarVisualizatorPedidosAdm();
-      }
-    }
-
-    function salvarConfiguracoesAdmin() {
-      precos.gas = parseFloat(document.getElementById('admin-preco-gas').value) || 0;
-      precos.agua = parseFloat(document.getElementById('admin-preco-agua').value) || 0;
-      precos.registro = parseFloat(document.getElementById('admin-preco-registro').value) || 0;
-
-      configSalva.precos = precos;
-      configSalva.chavePix = document.getElementById('admin-chave-pix').value;
-      configSalva.urlQrCode = document.getElementById('admin-url-qrcode').value.trim();
-
-      configSalva.pagamentosAtivos = {
-        dinheiro: document.getElementById('admin-pay-dinheiro').checked,
-        pix: document.getElementById('admin-pay-pix').checked,
-        cartao: document.getElementById('admin-pay-cartao').checked
-      };
-
-      localStorage.setItem('avila_config_global', JSON.stringify(configSalva));
-
-      aplicarConfiguracoesIniciais();
-
-      document.getElementById('pagamento').value = '';
-      gerenciarOpcoesPagamento();
-
-      fecharModalAdmin();
-      alert("⚙️ Configurações salvas permanentemente!");
-    }
-  </script>
-
+            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Arthur_Vance_Corretor.vcf');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Feedback simples
+            alert('Contato baixado com sucesso! Abra o arquivo para salvá-lo na sua agenda.');
+        });
+    </script>
 </body>
 </html>
