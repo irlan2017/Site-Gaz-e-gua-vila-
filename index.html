@@ -1,10 +1,13 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Central de Redes Sociais</title>
+  <title>Comercial Ávila - Disk Gás e Água</title>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,422 +16,1250 @@
     }
 
     body {
-      background-color: #0f172a;
-      color: #ffffff;
-      padding: 30px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .header-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 30px;
-      width: 100%;
-      max-width: 1200px;
-    }
-
-    /* Abas de Navegação */
-    .tabs-container {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 25px;
-      justify-content: center;
-      width: 100%;
-      max-width: 1200px;
-      flex-wrap: wrap;
-    }
-
-    .tab-btn {
-      background: #1e293b;
-      color: #94a3b8;
-      border: 1px solid #334155;
-      padding: 12px 25px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    .tab-btn:hover {
-      background: #334155;
-      color: #ffffff;
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: #ffffff;
-      border-color: #60a5fa;
-      box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
-    }
-
-    /* Título com letras EXTRA GRANDES */
-    h1 {
-      font-size: 5rem;
-      font-weight: 900;
-      color: #f8fafc;
-      text-shadow: 0 8px 20px rgba(0,0,0,0.6);
-      margin-bottom: 15px;
-      text-align: center;
-      letter-spacing: 2px;
-      line-height: 1;
-      transition: color 0.3s ease;
-    }
-
-    .footer-area {
-      margin-top: 50px;
-      padding-top: 25px;
-      border-top: 1px solid #1e293b;
-      width: 100%;
-      max-width: 1200px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-    }
-
-    /* Seção dos Desenvolvedores no Rodapé */
-    .developer-info {
-      font-size: 0.9rem;
-      color: #64748b;
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    /* Links do e-mail e WhatsApp em BRANCO */
-    .developer-info a {
-      color: #ffffff; 
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.2s;
-    }
-
-    .developer-info a:hover {
-      color: #e2e8f0;
-      text-decoration: underline;
-    }
-
-    /* Destaque em BRANCO para o nome do desenvolvedor */
-    .dev-name {
-      color: #ffffff;
-      font-weight: bold;
-    }
-
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      width: 100%;
-      max-width: 1200px;
-    }
-
-    .card {
-      border-radius: 20px;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      min-height: 220px;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-decoration: none;
-      color: white;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-
-    .card:hover {
-      transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-    }
-
-    .card h2 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-align: center;
-    }
-
-    .card p {
-      font-size: 1.3rem;
-      font-weight: 600;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 10px 20px;
-      border-radius: 30px;
-      margin-top: 15px;
-    }
-
-    /* Cores das Redes Sociais Padrão e Novas */
-    .grad-youtube   { background: linear-gradient(135deg, #ff0000, #cc0000); }
-    .grad-whatsapp  { background: linear-gradient(135deg, #25d366, #128c7e); }
-    .grad-facebook  { background: linear-gradient(135deg, #1877f2, #0d52b1); }
-    .grad-instagram { background: linear-gradient(135deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888); }
-    .grad-telegram  { background: linear-gradient(135deg, #0088cc, #005580); }
-    .grad-tiktok    { background: linear-gradient(135deg, #00f2fe, #4facfe, #ff0050); }
-    .grad-kwai      { background: linear-gradient(135deg, #ff8c00, #ff4500); }
-    .grad-twitter   { background: linear-gradient(135deg, #1da1f2, #0c85d0); }
-    .grad-linkedin  { background: linear-gradient(135deg, #0a66c2, #004182); }
-    .grad-pinterest { background: linear-gradient(135deg, #bd081c, #8c0613); }
-    .grad-threads   { background: linear-gradient(135deg, #262626, #000000); }
-    .grad-discord   { background: linear-gradient(135deg, #5865f2, #404eed); }
-    .grad-twitch    { background: linear-gradient(135deg, #9146ff, #772ce8); }
-
-    /* Cores das Lojas e Sites */
-    .grad-magalu       { background: linear-gradient(135deg, #0086ff, #0048b3); }
-    .grad-mercadolivre { background: linear-gradient(135deg, #ffe600, #ffcc00); color: #000 !important; }
-    .grad-casasbahia   { background: linear-gradient(135deg, #0042da, #002277); }
-    .grad-amazon       { background: linear-gradient(135deg, #ff9900, #e68a00); color: #000 !important; }
-    .grad-shopee       { background: linear-gradient(135deg, #ee4d2d, #c73211); }
-    .grad-americanas   { background: linear-gradient(135deg, #e60014, #99000d); }
-    .grad-shein        { background: linear-gradient(135deg, #222222, #000000); }
-    .grad-aliexpress   { background: linear-gradient(135deg, #ff4747, #cc0000); }
-    .grad-centauro     { background: linear-gradient(135deg, #ff6600, #cc5200); }
-    .grad-netshoes     { background: linear-gradient(135deg, #ff6600, #b84700); }
-
-    /* Cores de IPTV */
-    .grad-iptv         { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-
-    /* Janelas Popups */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
+      background-color: #f0f4f8;
+      color: #222;
       padding: 20px;
     }
 
-    .modal-content {
-      background: #1e293b;
-      padding: 35px;
-      border-radius: 25px;
-      max-width: 650px;
-      width: 100%;
+    .nome-empresa {
+      display: block;
       text-align: center;
-      position: relative;
-      border: 3px solid #38bdf8;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-      max-height: 90vh;
+      width: 100%;
+      margin: 0 auto 20px auto;
+      font-size: clamp(2.4rem, 7.5vw, 6.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: clamp(2px, 1vw, 10px);
+      line-height: 1.05;
+      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+      word-wrap: break-word;
+    }
+
+    .c1  { color: #e53935; }
+    .c2  { color: #fb8c00; }
+    .c3  { color: #fdd835; }
+    .c4  { color: #43a047; }
+    .c5  { color: #00acc1; }
+    .c6  { color: #1e88e5; }
+    .c7  { color: #3949ab; }
+    .c8  { color: #8e24aa; }
+    .c9  { color: #d81b60; }
+    .c10 { color: #ff5722; }
+    .c11 { color: #009688; }
+    .c12 { color: #7cb342; }
+    .c13 { color: #e91e63; }
+    .c14 { color: #0288d1; }
+
+    header {
+      background: linear-gradient(135deg, #0052cc, #0080ff);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 1.9rem;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 900px) {
+      .container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+
+    .produtos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card-produto {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 4px solid transparent;
+      transition: transform 0.2s;
+    }
+
+    .card-produto:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-gas {
+      border-color: #ff5722;
+      background: #fff5f2;
+    }
+
+    .card-agua {
+      border-color: #0288d1;
+      background: #f0f8ff;
+    }
+
+    .card-registro {
+      border-color: #4caf50;
+      background: #f1f8e9;
+    }
+
+    .card-produto img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      border-radius: 10px;
+    }
+
+    .card-produto h3 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .preco {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #d32f2f;
+      margin: 12px 0;
+    }
+
+    .btn-adicionar {
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+      transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-adicionar:hover {
+      background-color: #e68a00;
+    }
+
+    .painel-lateral {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .box-janela {
+      background: white;
+      padding: 22px;
+      border-radius: 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    .box-carrinho {
+      border: 3px solid #e91e63;
+    }
+
+    .box-endereco {
+      border: 3px solid #9c27b0;
+    }
+
+    .box-pagamento {
+      border: 3px solid #009688;
+    }
+
+    .box-janela h2 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .carrinho-lista {
+      list-style: none;
+      margin-bottom: 15px;
+      max-height: 200px;
       overflow-y: auto;
     }
 
-    .modal-content h3 {
-      font-size: 2.2rem;
-      margin-bottom: 15px;
+    .carrinho-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ccc;
+      font-size: 1.1rem;
     }
 
-    .modal-content p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      color: #cbd5e1;
+    .carrinho-item button {
+      background: #ff1744;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
-    .btn-abrir {
-      display: inline-block;
-      padding: 15px 30px;
+    .total-container {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: right;
+      color: #2e7d32;
+      margin-top: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1rem;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: white;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: #9c27b0;
+      outline: none;
+    }
+
+    .area-pix {
+      display: none;
+      background-color: #e0f2f1;
+      border: 2px dashed #00897b;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .area-pix img {
+      width: 170px;
+      height: 170px;
+      margin: 10px 0;
+      border: 3px solid white;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .btn-copiar {
+      background-color: #00897b;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .btn-finalizar {
+      width: 100%;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 16px;
       font-size: 1.4rem;
       font-weight: bold;
-      color: #fff;
-      background: #3b82f6;
-      border-radius: 50px;
-      text-decoration: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
+      margin-top: 15px;
+    }
+
+    .btn-finalizar:hover {
+      background-color: #1b5e20;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+    }
+
+    .footer-linha-principal {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .btn-admin-discreto {
+      background: transparent;
+      border: none;
+      color: #888;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .btn-admin-discreto:hover {
+      color: #3f51b5;
+    }
+
+    .controle-audio {
+      background: #e2e8f0;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 1.1rem;
+      color: #475569;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       transition: background 0.2s;
     }
 
-    .btn-abrir:hover {
-      background: #2563eb;
+    .controle-audio:hover {
+      background: #cbd5e1;
     }
 
-    .fechar {
+    .footer-desenvolvedor {
+      font-size: 0.95rem;
+      color: #8e24aa;
+      font-weight: 600;
+      text-align: center;
+      width: 100%;
+      padding-top: 10px;
+      border-top: 1px solid #cbd5e1;
+    }
+
+    .footer-desenvolvedor span, .footer-desenvolvedor a {
+      color: #8e24aa;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    .modal-admin {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-conteudo {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 96%;
+      max-width: 800px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+      position: relative;
+    }
+
+    .fechar-modal {
       position: absolute;
-      top: 15px; right: 20px;
-      font-size: 2.5rem;
-      color: #94a3b8;
+      top: 15px;
+      right: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #aaa;
       cursor: pointer;
     }
 
-    .fechar:hover {
-      color: #ffffff;
+    .fechar-modal:hover {
+      color: #000;
     }
 
-    /* Ajuste para telas menores */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 3.2rem;
-      }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .btn-salvar-admin, .btn-login-admin, .btn-accordion, .btn-recuperar {
+      background-color: #3f51b5;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .btn-recuperar {
+      background-color: #0288d1;
+    }
+
+    .alerta-erro-senha {
+      display: none;
+      background-color: #ffebee;
+      color: #c62828;
+      border: 1px solid #ef9a9a;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 15px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .btn-esqueci {
+      background: #ff9800;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 8px;
+      display: block;
+      width: 100%;
+    }
+
+    .btn-accordion {
+      background-color: #f1f5f9;
+      color: #1e293b;
+      border: 2px solid #cbd5e1;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      margin-top: 15px;
+      border-radius: 8px;
+      font-size: 1.15rem;
+    }
+
+    .conteudo-accordion {
+      display: none;
+      background: #fafafa;
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      margin-bottom: 10px;
+    }
+
+    .pedido-card-adm {
+      background: #fff8e1;
+      border: 4px solid #ffb300;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .pedido-card-adm h4 {
+      font-size: 1.6rem;
+      color: #d32f2f;
+      margin-bottom: 8px;
+    }
+
+    .pedido-card-adm p {
+      font-size: 1.25rem;
+      color: #111;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .pedido-card-adm .destaque-total {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2e7d32;
+      margin-top: 10px;
+    }
+
+    .btn-remover-pedido {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .acoes-lote-adm {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 10px 14px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+
+    .btn-excluir-todos {
+      background-color: #c62828;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <!-- Abas de Navegação -->
-  <div class="tabs-container">
-    <button class="tab-btn active" onclick="mudarAba('redes')">📱 Redes Sociais</button>
-    <button class="tab-btn" onclick="mudarAba('lojas')">🛒 Lojas e Sites</button>
-    <button class="tab-btn" onclick="mudarAba('iptv')">📺 IPTV</button>
+  <audio id="musica-fundo" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    Seu navegador não suporta elemento de áudio.
+  </audio>
+
+  <div class="nome-empresa">
+    <span class="c1">C</span><span class="c2">O</span><span class="c3">M</span><span class="c4">E</span><span class="c5">R</span><span class="c6">C</span><span class="c7">I</span><span class="c8">A</span><span class="c9">L</span>
+    &nbsp;
+    <span class="c10">Á</span><span class="c11">V</span><span class="c12">I</span><span class="c13">L</span><span class="c14">A</span>
   </div>
 
-  <div class="header-area">
-    <h1 id="tituloCentral">Central de Redes Sociais</h1>
+  <header>
+    <h1>🔥 DISK GÁS & ÁGUA 💧</h1>
+    <p>Entregas rápidas no seu bairro!</p>
+  </header>
+
+  <div class="container">
+    <section class="produtos-grid">
+      <div class="card-produto card-gas">
+        <div>
+          <img src="https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&w=500&q=80" alt="Botija de Gás 13kg">
+          <h3>Botija de Gás 13kg</h3>
+          <p class="preco" id="exibicao-preco-gas">R$ 115,00</p>
+        </div>
+        <button class="btn-adicionar" onclick="adicionarAoCarrinho('Botija de Gás 13kg', precos.gas)">➕ ADICIONAR</button>
+      </div>
+
+      <div class="card-produto card-agua">
+        <div>
+          <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=500&q=80" alt="Galão de Água 20L">
+          <h3>Galão de Água 20L</h3>
+          <p class="preco" id="exibicao-preco-agua">R$ 18,00</p>
+        </div>
+        <button class="btn-adicionar" onclick="adicionarAoCarrinho('Galão de Água 20L', precos.agua)">➕ ADICIONAR</button>
+      </div>
+
+      <div class="card-produto card-registro">
+        <div>
+          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80" alt="Registro de Fogão">
+          <h3>Registro de Fogão</h3>
+          <p class="preco" id="exibicao-preco-registro">R$ 65,00</p>
+        </div>
+        <button class="btn-adicionar" onclick="adicionarAoCarrinho('Registro de Fogão', precos.registro)">➕ ADICIONAR</button>
+      </div>
+    </section>
+
+    <aside class="painel-lateral">
+      <div class="box-janela box-carrinho">
+        <h2>🛒 Meu Carrinho</h2>
+        <ul id="carrinho-lista" class="carrinho-lista">
+          <li style="color: #666; font-size: 1rem;">O carrinho está vazio.</li>
+        </ul>
+        <div class="total-container">
+          Total: R$ <span id="valor-total">0,00</span>
+        </div>
+      </div>
+
+      <form id="form-pedido" onsubmit="finalizarPedido(event)">
+        <div class="box-janela box-endereco" style="margin-bottom: 20px;">
+          <h2>📍 Endereço de Entrega</h2>
+            
+          <div class="form-group">
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" required placeholder="Digite seu nome completo">
+          </div>
+
+          <div class="form-group">
+            <label for="tipo-residencia">Tipo de Residência:</label>
+            <select id="tipo-residencia" required onchange="gerenciarTipoResidencia()">
+              <option value="">-- Selecione o tipo --</option>
+              <option value="Casa">Casa</option>
+              <option value="Apartamento">Apartamento</option>
+              <option value="Condomínio">Condomínio</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="rua">Rua / Avenida:</label>
+            <input type="text" id="rua" required placeholder="Nome da rua ou avenida">
+          </div>
+
+          <div class="form-group">
+            <label for="numero">Número:</label>
+            <input type="text" id="numero" required placeholder="Número do imóvel">
+          </div>
+
+          <div class="form-group">
+            <label for="bairro">Bairro:</label>
+            <input type="text" id="bairro" required placeholder="Nome do bairro">
+          </div>
+
+          <div class="form-group" id="grupo-bloco" style="display: none;">
+            <label for="bloco">Bloco (Se houver):</label>
+            <input type="text" id="bloco" placeholder="Ex: Bloco B">
+          </div>
+
+          <div class="form-group" id="grupo-apartamento" style="display: none;">
+            <label for="apartamento">Apartamento (Se houver):</label>
+            <input type="text" id="apartamento" placeholder="Ex: Apto 204">
+          </div>
+
+          <div class="form-group">
+            <label for="referencia">Ponto de Referência:</label>
+            <input type="text" id="referencia" placeholder="Ex: Próximo à padaria / casa verde">
+          </div>
+        </div>
+
+        <div id="secao-pagamento" class="box-janela box-pagamento">
+          <h2>💳 Forma de Pagamento</h2>
+
+          <div class="form-group">
+            <label for="pagamento">Escolha a Forma de Pagamento:</label>
+            <select id="pagamento" required onchange="gerenciarOpcoesPagamento()">
+              <option value="">-- Selecione uma opção --</option>
+              <option id="opt-dinheiro" value="Dinheiro">Dinheiro</option>
+              <option id="opt-pix" value="Pix">Pix</option>
+              <option id="opt-cartao" value="Cartão">Cartão</option>
+            </select>
+          </div>
+
+          <div id="area-pix" class="area-pix">
+            <p><strong>Escaneie o QR Code abaixo com o app do seu banco:</strong></p>
+            <img id="img-qrcode" src="" alt="QR Code PIX">
+            <p style="font-size: 0.9rem; color: #333;">Chave PIX:</p>
+            <input type="text" id="chave-pix" readonly style="text-align: center; margin-top: 5px; font-weight: bold;">
+            <button type="button" class="btn-copiar" onclick="copiarChavePix()">📋 Copiar Chave PIX</button>
+          </div>
+
+          <div class="form-group" id="grupo-troco" style="display: none; margin-top: 10px;">
+            <label for="troco">Precisa de troco para quanto?</label>
+            <input type="number" id="troco" step="0.01" placeholder="Ex: 150.00 (deixe vazio se não precisar)">
+          </div>
+
+          <button type="submit" id="btn-submit-pedido" class="btn-finalizar">✅ FINALIZAR PEDIDO</button>
+        </div>
+      </form>
+    </aside>
   </div>
 
-  <div class="grid-container" id="gridRedes">
-    <!-- Bloco dinâmico preenchido por JavaScript -->
-  </div>
-
-  <div class="footer-area">
-    <!-- Informações dos Desenvolvedores -->
-    <div class="developer-info">
-      Desenvolvedor: <strong class="dev-name">Irlan</strong><br>
-      E-mail: <a href="mailto:iranjuniormax@gmail.com">iranjuniormax@gmail.com</a><br>
-      WhatsApp 🇧🇷: <a href="https://wa.me/5569992535201" target="_blank">+55 69 99253-5201</a>
+  <footer>
+    <div class="footer-linha-principal">
+      <button type="button" class="controle-audio" id="btn-audio" onclick="alternarAudio()">🔊 Silenciar Música</button>
+      <button type="button" class="btn-admin-discreto" onclick="abrirModalAdmin()">⚙️ Área do Administrador</button>
     </div>
-  </div>
+    <div class="footer-desenvolvedor">
+      Desenvolvedor: <span>IrLan</span> | WhatsApp: <a href="https://wa.me/5569992535201" target="_blank">+55 69 99253-5201</a>
+    </div>
+  </footer>
 
-  <!-- Janela Modal do Usuário -->
-  <div id="modalJanela" class="modal">
-    <div class="modal-content">
-      <span class="fechar" onclick="fecharJanela()">&times;</span>
-      <h3 id="modalTitulo">Rede Social</h3>
-      <p id="modalTexto">Descrição da rede social selecionada.</p>
-      <a id="modalLink" href="#" target="_blank" class="btn-abrir">Ir para o site</a>
+  <div id="modal-admin" class="modal-admin">
+    <div class="modal-conteudo">
+      <span class="fechar-modal" onclick="fecharModalAdmin()">&times;</span>
+      <h3 style="margin-bottom: 20px; font-size: 2rem;">⚙️ Painel de Controle (ADM)</h3>
+
+      <div id="admin-login">
+        <div class="form-group">
+          <label for="senha-admin" style="font-size: 1.1rem;">🔑 Digite a Senha:</label>
+          <input type="password" id="senha-admin" placeholder="Senha" style="padding: 12px; font-size: 1.1rem;" onkeypress="verificarTeclaEnter(event)">
+        </div>
+        <button type="button" class="btn-login-admin" onclick="autenticarAdmin()">ENTRAR</button>
+        
+        <div id="alerta-erro-senha" class="alerta-erro-senha">
+          ❌ <strong>Senha incorreta!</strong> Deseja recuperar sua senha?
+          <button type="button" class="btn-esqueci" onclick="mostrarTelaEsqueciSenha()">🔑 Esqueci a Senha</button>
+        </div>
+      </div>
+
+      <div id="admin-recuperacao" style="display: none;">
+        <p style="font-size: 1.1rem; margin-bottom: 15px; color: #333;">Digite o WhatsApp cadastrado para receber o código de recuperação:</p>
+        <div class="form-group">
+          <label for="whatsapp-recuperacao" style="font-size: 1.1rem;">📱 WhatsApp Cadastrado:</label>
+          <input type="text" id="whatsapp-recuperacao" placeholder="Ex: 5569992535201" style="padding: 12px; font-size: 1.1rem;">
+        </div>
+        <button type="button" class="btn-recuperar" onclick="enviarCodigoRecuperacao()">📤 Enviar Código pelo WhatsApp</button>
+        
+        <div id="bloco-validar-codigo" style="display: none; margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px;">
+          <div class="form-group">
+            <label for="codigo-digitado" style="font-size: 1.1rem;">🔢 Digite o Código Recebido:</label>
+            <input type="text" id="codigo-digitado" placeholder="Código de 4 dígitos" style="padding: 12px; font-size: 1.1rem;">
+          </div>
+          <button type="button" class="btn-salvar-admin" onclick="verificarCodigoRecuperacao()">✅ Confirmar Código</button>
+        </div>
+
+        <button type="button" class="btn-esqueci" onclick="voltarParaLogin()" style="margin-top: 15px; text-align: center; background: #3f51b5;">Voltar para o Login</button>
+      </div>
+
+      <div id="admin-conteudo" style="display: none;">
+        <button type="button" class="btn-accordion" onclick="alternarAccordion('bloco-pedidos-recebidos')" style="background-color: #fffae6; border-color: #ffb300;">
+          <span style="font-size: 1.25rem; font-weight: bold; color: #b71c1c;">📋 Pedidos Recebidos dos Clientes</span>
+          <span id="icone-bloco-pedidos-recebidos">▼</span>
+        </button>
+        <div id="bloco-pedidos-recebidos" class="conteudo-accordion">
+          <div id="acoes-lote" class="acoes-lote-adm" style="display: none;">
+            <div class="checkbox-group" style="margin: 0; font-weight: bold;">
+              <input type="checkbox" id="selecionar-todos-pedidos" onclick="toggleSelecionarTodos(this)">
+              <label for="selecionar-todos-pedidos" style="margin: 0; cursor: pointer;">Selecionar Todos</label>
+            </div>
+            <button type="button" class="btn-excluir-todos" onclick="excluirSelecionados()">🗑️ Excluir Selecionados</button>
+          </div>
+          <div id="lista-pedidos-adm">
+            <p style="font-size: 1.2rem; color: #666; text-align: center; padding: 20px;">Nenhum pedido recebido no momento.</p>
+          </div>
+        </div>
+
+        <button type="button" class="btn-accordion" onclick="alternarAccordion('bloco-precos')">
+          <span>💲 Editar Preços dos Produtos</span>
+          <span id="icone-bloco-precos">▼</span>
+        </button>
+        <div id="bloco-precos" class="conteudo-accordion">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label style="font-size: 1rem;">Gás 13kg:</label>
+            <input type="number" id="admin-preco-gas" step="0.01" style="padding: 10px; font-size: 1.1rem;">
+          </div>
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label style="font-size: 1rem;">Água 20L:</label>
+            <input type="number" id="admin-preco-agua" step="0.01" style="padding: 10px; font-size: 1.1rem;">
+          </div>
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label style="font-size: 1rem;">Registro de Fogão:</label>
+            <input type="number" id="admin-preco-registro" step="0.01" style="padding: 10px; font-size: 1.1rem;">
+          </div>
+        </div>
+
+        <button type="button" class="btn-accordion" onclick="alternarAccordion('bloco-pagamentos')">
+          <span>💳 Formas de Pagamento e Chave PIX</span>
+          <span id="icone-bloco-pagamentos">▼</span>
+        </button>
+        <div id="bloco-pagamentos" class="conteudo-accordion">
+          <p style="font-weight: bold; margin-bottom: 8px; font-size: 1rem; color: #303f9f;">Opções Ativas:</p>
+          <div class="checkbox-group" style="font-size: 1.05rem;">
+            <input type="checkbox" id="admin-pay-dinheiro" checked>
+            <label for="admin-pay-dinheiro">Dinheiro</label>
+          </div>
+          <div class="checkbox-group" style="font-size: 1.05rem;">
+            <input type="checkbox" id="admin-pay-pix" checked>
+            <label for="admin-pay-pix">Pix</label>
+          </div>
+          <div class="checkbox-group" style="margin-bottom: 15px; font-size: 1.05rem;">
+            <input type="checkbox" id="admin-pay-cartao" checked>
+            <label for="admin-pay-cartao">Cartão</label>
+          </div>
+
+          <p style="font-weight: bold; margin-bottom: 8px; font-size: 1rem; color: #303f9f;">Configurar PIX e QR Code:</p>
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label style="font-size: 1rem;">Chave PIX da Loja:</label>
+            <input type="text" id="admin-chave-pix" style="padding: 10px; font-size: 1.1rem;">
+          </div>
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label style="font-size: 1rem;">Link / URL do QR Code (Imagem):</label>
+            <input type="text" id="admin-url-qrcode" placeholder="Link da imagem (ou deixe em branco)" style="padding: 10px; font-size: 1.1rem;">
+          </div>
+        </div>
+
+        <button type="button" class="btn-salvar-admin" onclick="salvarConfiguracoesAdmin()" style="margin-top: 20px;">💾 SALVAR ALTERAÇÕES</button>
+      </div>
     </div>
   </div>
 
   <script>
-    // Aba Ativa Atual
-    let abaAtual = 'redes';
+    const SENHA_CORRETA = "92535201";
+    const WHATSAPP_ADMIN = "5569992535201";
+    let codigoGeradoSistema = "";
 
-    // Dados Padrão (Redes Sociais)
-    const redes = [
-      { id: 'youtube',   nome: 'YouTube',   estilo: 'grad-youtube',   corCustom: '#ff0000', link: 'https://youtube.com',     descricao: 'Assista a vídeos, tutoriais e transmissões ao vivo.' },
-      { id: 'whatsapp',  nome: 'WhatsApp',  estilo: 'grad-whatsapp',  corCustom: '#25d366', link: 'https://web.whatsapp.com', descricao: 'Envie mensagens e faça chamadas com seus amigos.' },
-      { id: 'facebook',  nome: 'Facebook',  estilo: 'grad-facebook',  corCustom: '#1877f2', link: 'https://facebook.com',     descricao: 'Conecte-se com amigos e compartilhe momentos.' },
-      { id: 'instagram', nome: 'Instagram', estilo: 'grad-instagram', corCustom: '#e6683c', link: 'https://instagram.com',    descricao: 'Veja fotos, reels e stories do seu dia a dia.' },
-      { id: 'telegram',  nome: 'Telegram',  estilo: 'grad-telegram',  corCustom: '#0088cc', link: 'https://web.telegram.org', descricao: 'Mensagens rápidas, grupos e canais de notícias.' },
-      { id: 'tiktok',    nome: 'TikTok',    estilo: 'grad-tiktok',    corCustom: '#00f2fe', link: 'https://tiktok.com',      descricao: 'Assista a vídeos curtos, tendências e dancinhas.' },
-      { id: 'kwai',      nome: 'Kwai',      estilo: 'grad-kwai',      corCustom: '#ff8c00', link: 'https://kwai.com',        descricao: 'Vídeos curtos e divertidos para todos os momentos.' },
-      { id: 'twitter',   nome: 'X (Twitter)', estilo: 'grad-twitter', corCustom: '#1da1f2', link: 'https://twitter.com',       descricao: 'Acompanhe as notícias de última hora e discussões globais.' },
-      { id: 'linkedin',  nome: 'LinkedIn',  estilo: 'grad-linkedin',  corCustom: '#0a66c2', link: 'https://linkedin.com',     descricao: 'Sua rede profissional para conexões de carreira e vagas.' },
-      { id: 'pinterest', nome: 'Pinterest', estilo: 'grad-pinterest', corCustom: '#bd081c', link: 'https://pinterest.com',    descricao: 'Encontre ideias criativas, inspirações e receitas.' },
-      { id: 'threads',   nome: 'Threads',   estilo: 'grad-threads',   corCustom: '#262626', link: 'https://www.threads.net',  descricao: 'Compartilhe ideias e conversas em texto com o público.' },
-      { id: 'discord',   nome: 'Discord',   estilo: 'grad-discord',   corCustom: '#5865f2', link: 'https://discord.com',      descricao: 'Comunidades, chats de voz e servidores de jogos.' },
-      { id: 'twitch',    nome: 'Twitch',    estilo: 'grad-twitch',    corCustom: '#9146ff', link: 'https://twitch.tv',        descricao: 'Plataforma líder em transmissões ao vivo de games e criadores.' }
-    ];
+    let configSalva = JSON.parse(localStorage.getItem('avila_config_global')) || {
+      precos: {
+        gas: 115.00,
+        agua: 18.00,
+        registro: 65.00
+      },
+      pagamentosAtivos: {
+        dinheiro: true,
+        pix: true,
+        cartao: true
+      },
+      chavePix: "(69) 99253-5201",
+      urlQrCode: ""
+    };
 
-    // Dados Padrão (Lojas e Sites)
-    const lojas = [
-      { id: 'magalu',       nome: 'Magalu',        estilo: 'grad-magalu',       corCustom: '#0086ff', link: 'https://www.magazineluiza.com.br', descricao: 'Ofertas em eletrodomésticos, tecnologia e móveis.' },
-      { id: 'mercadolivre', nome: 'Mercado Livre', estilo: 'grad-mercadolivre', corCustom: '#ffe600', link: 'https://www.mercadolivre.com.br', descricao: 'O maior marketplace da América Latina com frete grátis.' },
-      { id: 'casasbahia',   nome: 'Casas Bahia',   estilo: 'grad-casasbahia',   corCustom: '#0042da', link: 'https://www.casasbahia.com.br',   descricao: 'Tudo em móveis, celulares, eletrodomésticos e utilidades.' },
-      { id: 'amazon',       nome: 'Amazon',        estilo: 'grad-amazon',       corCustom: '#ff9900', link: 'https://www.amazon.com.br',       descricao: 'Livros, eletrônicos, casa e assinaturas Prime.' },
-      { id: 'shopee',       nome: 'Shopee',        estilo: 'grad-shopee',       corCustom: '#ee4d2d', link: 'https://shopee.com.br',           descricao: 'Milhares de itens com descontos e cupons diários.' },
-      { id: 'americanas',   nome: 'Americanas',    estilo: 'grad-americanas',   corCustom: '#e60014', link: 'https://www.americanas.com.br',   descricao: 'Tudo o que você precisa em tecnologia, casa e lazer.' },
-      { id: 'shein',        nome: 'Shein',         estilo: 'grad-shein',        corCustom: '#222222', link: 'https://www.shein.com.br',        descricao: 'Moda feminina, masculina, infantil e acessórios com ótimos preços.' },
-      { id: 'aliexpress',   nome: 'AliExpress',    estilo: 'grad-aliexpress',   corCustom: '#ff4747', link: 'https://www.netflix.com',       descricao: 'Variedade imensa de produtos importados, eletrônicos e mais.' },
-      { id: 'centauro',     nome: 'Centauro',      estilo: 'grad-centauro',     corCustom: '#ff6600', link: 'https://www.centauro.com.br',     descricao: 'Artigos esportivos, tênis, camisas de time e acessórios.' },
-      { id: 'netshoes',     nome: 'Netshoes',      estilo: 'grad-netshoes',     corCustom: '#b84700', link: 'https://www.netshoes.com.br',     descricao: 'Esporte, moda e lazer com as melhores marcas do mercado.' }
-    ];
+    let precos = configSalva.precos;
+    let carrinho = JSON.parse(localStorage.getItem('avila_carrinho')) || [];
+    let pedidosRecebidos = JSON.parse(localStorage.getItem('avila_pedidos_recebidos')) || [];
 
-    // Dados Padrão (IPTV)
-    const iptv = [
-      { id: 'iptv1', nome: 'Site iptv', estilo: 'grad-iptv', corCustom: '#7c3aed', link: 'https://www.netflix.com',         descricao: 'Acesse nosso site oficial iptv.' }
-    ];
+    window.addEventListener('DOMContentLoaded', () => {
+      aplicarConfiguracoesIniciais();
+      atualizarCarrinho();
 
-    // Configurações de Título por Aba
-    const configRedes = { texto: "Central de Redes Sociais", cor: "#f8fafc" };
-    const configLojas = { texto: "Lojas e Sites", cor: "#f8fafc" };
-    const configIptv  = { texto: "IPTV", cor: "#f8fafc" };
+      const musica = document.getElementById('musica-fundo');
+      musica.volume = 0.07;
+      musica.play().catch(() => {
+        document.body.addEventListener('click', () => {
+          if (musica.paused) {
+            musica.play();
+          }
+        }, { once: true });
+      });
+    });
 
-    // Mudar de Aba
-    function mudarAba(novaAba) {
-      abaAtual = novaAba;
-      
-      const botoes = document.querySelectorAll('.tab-btn');
-      botoes.forEach(btn => btn.classList.remove('active'));
-      
-      if (novaAba === 'redes') {
-        botoes[0].classList.add('active');
-      } else if (novaAba === 'lojas') {
-        botoes[1].classList.add('active');
-      } else if (novaAba === 'iptv') {
-        botoes[2].classList.add('active');
+    function aplicarConfiguracoesIniciais() {
+      document.getElementById('exibicao-preco-gas').innerText = `R$ ${precos.gas.toFixed(2).replace('.', ',')}`;
+      document.getElementById('exibicao-preco-agua').innerText = `R$ ${precos.agua.toFixed(2).replace('.', ',')}`;
+      document.getElementById('exibicao-preco-registro').innerText = `R$ ${precos.registro.toFixed(2).replace('.', ',')}`;
+
+      document.getElementById('admin-preco-gas').value = precos.gas;
+      document.getElementById('admin-preco-agua').value = precos.agua;
+      document.getElementById('admin-preco-registro').value = precos.registro;
+
+      document.getElementById('chave-pix').value = configSalva.chavePix;
+      document.getElementById('admin-chave-pix').value = configSalva.chavePix;
+      document.getElementById('admin-url-qrcode').value = configSalva.urlQrCode;
+
+      if (configSalva.urlQrCode && configSalva.urlQrCode.trim() !== "") {
+        document.getElementById('img-qrcode').src = configSalva.urlQrCode;
+      } else {
+        document.getElementById('img-qrcode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(configSalva.chavePix)}`;
       }
 
-      renderizarGrid();
+      document.getElementById('admin-pay-dinheiro').checked = configSalva.pagamentosAtivos.dinheiro;
+      document.getElementById('admin-pay-pix').checked = configSalva.pagamentosAtivos.pix;
+      document.getElementById('admin-pay-cartao').checked = configSalva.pagamentosAtivos.cartao;
+
+      document.getElementById('opt-dinheiro').style.display = configSalva.pagamentosAtivos.dinheiro ? 'block' : 'none';
+      document.getElementById('opt-pix').style.display = configSalva.pagamentosAtivos.pix ? 'block' : 'none';
+      document.getElementById('opt-cartao').style.display = configSalva.pagamentosAtivos.cartao ? 'block' : 'none';
     }
 
-    // Renderizar Tela Principal
-    function renderizarGrid() {
-      const h1Element = document.getElementById('tituloCentral');
-      let configAtual;
-      let itensAtuais;
+    function alternarAudio() {
+      const musica = document.getElementById('musica-fundo');
+      const btnAudio = document.getElementById('btn-audio');
+      if (musica.paused) {
+        musica.play();
+        btnAudio.innerHTML = "🔊 Silenciar Música";
+      } else {
+        musica.pause();
+        btnAudio.innerHTML = "🔇 Tocar Música";
+      }
+    }
 
-      if (abaAtual === 'redes') {
-        configAtual = configRedes;
-        itensAtuais = redes;
-      } else if (abaAtual === 'lojas') {
-        configAtual = configLojas;
-        itensAtuais = lojas;
-      } else if (abaAtual === 'iptv') {
-        configAtual = configIptv;
-        itensAtuais = iptv;
+    function abrirModalAdmin() {
+      document.getElementById('admin-login').style.display = 'block';
+      document.getElementById('admin-recuperacao').style.display = 'none';
+      document.getElementById('admin-conteudo').style.display = 'none';
+      document.getElementById('senha-admin').value = '';
+      document.getElementById('alerta-erro-senha').style.display = 'none';
+      document.getElementById('whatsapp-recuperacao').value = '';
+      document.getElementById('codigo-digitado').value = '';
+      document.getElementById('bloco-validar-codigo').style.display = 'none';
+      fecharTodosAccordions();
+      document.getElementById('modal-admin').style.display = 'flex';
+    }
+
+    function fecharModalAdmin() {
+      document.getElementById('modal-admin').style.display = 'none';
+      document.getElementById('admin-login').style.display = 'block';
+      document.getElementById('admin-recuperacao').style.display = 'none';
+      document.getElementById('admin-conteudo').style.display = 'none';
+      document.getElementById('senha-admin').value = '';
+      document.getElementById('alerta-erro-senha').style.display = 'none';
+      fecharTodosAccordions();
+    }
+
+    function mostrarTelaEsqueciSenha() {
+      document.getElementById('admin-login').style.display = 'none';
+      document.getElementById('admin-recuperacao').style.display = 'block';
+    }
+
+    function voltarParaLogin() {
+      document.getElementById('admin-recuperacao').style.display = 'none';
+      document.getElementById('admin-login').style.display = 'block';
+      document.getElementById('alerta-erro-senha').style.display = 'none';
+      document.getElementById('senha-admin').value = '';
+    }
+
+    function enviarCodigoRecuperacao() {
+      const whatsappInformado = document.getElementById('whatsapp-recuperacao').value.trim();
+      if (whatsappInformado !== WHATSAPP_ADMIN) {
+        alert("❌ Número de WhatsApp não confere com o cadastrado no sistema!");
+        return;
       }
 
-      h1Element.innerText = configAtual.texto;
-      h1Element.style.color = configAtual.cor;
-      document.title = configAtual.texto;
+      codigoGeradoSistema = Math.floor(1000 + Math.random() * 9000).toString();
+      const mensagem = `🔐 *RECUPERAÇÃO DE SENHA - PAINEL ADM*\n\nSeu código de verificação é: *${codigoGeradoSistema}*\n\nInsira este código na tela para acessar o painel.`;
+      const urlWhats = `https://api.whatsapp.com/send?phone=${WHATSAPP_ADMIN}&text=${encodeURIComponent(mensagem)}`;
+      
+      window.open(urlWhats, '_blank');
+      document.getElementById('bloco-validar-codigo').style.display = 'block';
+      alert("✅ Código gerado e redirecionado para o WhatsApp cadastrado!");
+    }
 
-      const grid = document.getElementById('gridRedes');
-      grid.innerHTML = '';
+    function verificarCodigoRecuperacao() {
+      const codigoDigitado = document.getElementById('codigo-digitado').value.trim();
+      if (codigoDigitado === codigoGeradoSistema && codigoGeradoSistema !== "") {
+        alert(`✅ Código confirmado com sucesso!\n\nSua senha atual do painel é: ${SENHA_CORRETA}`);
+        document.getElementById('admin-recuperacao').style.display = 'none';
+        document.getElementById('admin-conteudo').style.display = 'block';
+        atualizarVisualizatorPedidosAdm();
+      } else {
+        alert("❌ Código incorreto! Verifique o número digitado.");
+      }
+    }
 
-      itensAtuais.forEach((item) => {
-        const card = document.createElement('div');
-        card.className = `card ${item.estilo || ''}`;
-        
-        if (item.corCustom) {
-          card.style.background = item.corCustom;
+    function alternarAccordion(idBloco) {
+      const bloco = document.getElementById(idBloco);
+      const icone = document.getElementById('icone-' + idBloco);
+      
+      if (bloco.style.display === 'block') {
+        bloco.style.display = 'none';
+        icone.innerText = '▼';
+      } else {
+        bloco.style.display = 'block';
+        icone.innerText = '▲';
+      }
+    }
+
+    function fecharTodosAccordions() {
+      ['bloco-pedidos-recebidos', 'bloco-precos', 'bloco-pagamentos'].forEach(id => {
+        const bloco = document.getElementById(id);
+        const icone = document.getElementById('icone-' + id);
+        if (bloco && icone) {
+          bloco.style.display = 'none';
+          icone.innerText = '▼';
         }
-
-        card.onclick = () => abrirJanela(item.nome, item.link, item.descricao);
-        card.innerHTML = `
-          <h2>${item.nome}</h2>
-          <p>Clique para abrir</p>
-        `;
-        grid.appendChild(card);
       });
     }
 
-    // Modal do Usuário
-    function abrirJanela(nome, link, descricao) {
-      document.getElementById('modalTitulo').innerText = nome;
-      document.getElementById('modalTexto').innerText = descricao;
-      document.getElementById('modalLink').href = link;
-      document.getElementById('modalJanela').style.display = 'flex';
+    function autenticarAdmin() {
+      const senhaInput = document.getElementById('senha-admin').value;
+      if (senhaInput === SENHA_CORRETA) {
+        document.getElementById('alerta-erro-senha').style.display = 'none';
+        document.getElementById('admin-login').style.display = 'none';
+        document.getElementById('admin-conteudo').style.display = 'block';
+        atualizarVisualizatorPedidosAdm();
+      } else {
+        document.getElementById('alerta-erro-senha').style.display = 'block';
+        document.getElementById('senha-admin').value = '';
+      }
     }
 
-    function fecharJanela() {
-      document.getElementById('modalJanela').style.display = 'none';
+    function verificarTeclaEnter(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        autenticarAdmin();
+      }
     }
 
-    // Fechar ao clicar fora do modal
-    window.onclick = function(event) {
-      let modalJanela = document.getElementById('modalJanela');
-      if (event.target === modalJanela) fecharJanela();
+    function adicionarAoCarrinho(nome, preco) {
+      carrinho.push({ nome, preco });
+      localStorage.setItem('avila_carrinho', JSON.stringify(carrinho));
+      atualizarCarrinho();
+      document.getElementById('secao-pagamento').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Inicialização
-    renderizarGrid();
+    function removerDoCarrinho(index) {
+      carrinho.splice(index, 1);
+      localStorage.setItem('avila_carrinho', JSON.stringify(carrinho));
+      atualizarCarrinho();
+    }
+
+    function atualizarCarrinho() {
+      const listaElement = document.getElementById('carrinho-lista');
+      const totalElement = document.getElementById('valor-total');
+      
+      listaElement.innerHTML = '';
+      let total = 0;
+
+      if (carrinho.length === 0) {
+        listaElement.innerHTML = '<li style="color: #666; font-size: 1rem;">O carrinho está vazio.</li>';
+      } else {
+        carrinho.forEach((item, index) => {
+          total += item.preco;
+          const li = document.createElement('li');
+          li.className = 'carrinho-item';
+          li.innerHTML = `<span>${item.nome} - R$ ${item.preco.toFixed(2).replace('.', ',')}</span> <button type="button" onclick="removerDoCarrinho(${index})">X</button>`;
+          listaElement.appendChild(li);
+        });
+      }
+
+      totalElement.innerText = total.toFixed(2).replace('.', ',');
+    }
+
+    function gerenciarTipoResidencia() {
+      const tipoResidencia = document.getElementById('tipo-residencia').value;
+      const grupoBloco = document.getElementById('grupo-bloco');
+      const grupoApartamento = document.getElementById('grupo-apartamento');
+
+      if (tipoResidencia === 'Apartamento') {
+        grupoBloco.style.display = 'block';
+        grupoApartamento.style.display = 'block';
+      } else {
+        grupoBloco.style.display = 'none';
+        grupoApartamento.style.display = 'none';
+        document.getElementById('bloco').value = '';
+        document.getElementById('apartamento').value = '';
+      }
+    }
+
+    function gerenciarOpcoesPagamento() {
+      const opcao = document.getElementById('pagamento').value;
+      const campoTroco = document.getElementById('grupo-troco');
+      const areaPix = document.getElementById('area-pix');
+      
+      if (opcao === 'Pix') {
+        areaPix.style.display = 'block';
+      } else {
+        areaPix.style.display = 'none';
+      }
+
+      if (opcao === 'Dinheiro') {
+        campoTroco.style.display = 'block';
+      } else {
+        campoTroco.style.display = 'none';
+        document.getElementById('troco').value = '';
+      }
+    }
+
+    function copiarChavePix() {
+      const chaveInput = document.getElementById('chave-pix');
+      chaveInput.select();
+      chaveInput.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(chaveInput.value);
+      alert("Chave PIX copiada para a área de transferência!");
+    }
+
+    function finalizarPedido(event) {
+      event.preventDefault();
+
+      if (carrinho.length === 0) {
+        alert('Por favor, adicione pelo menos um item ao carrinho antes de finalizar!');
+        return;
+      }
+
+      const btnSubmit = document.getElementById('btn-submit-pedido');
+      btnSubmit.disabled = true;
+      btnSubmit.innerText = "⏳ ENVIANDO PEDIDO...";
+
+      const nome = document.getElementById('nome').value;
+      const tipoResidencia = document.getElementById('tipo-residencia').value;
+      const rua = document.getElementById('rua').value;
+      const numero = document.getElementById('numero').value;
+      const bairro = document.getElementById('bairro').value;
+      const bloco = document.getElementById('bloco').value;
+      const apartamento = document.getElementById('apartamento').value;
+      const referencia = document.getElementById('referencia').value;
+      const formaPagamento = document.getElementById('pagamento').value;
+      const trocoPara = document.getElementById('troco').value;
+      const totalValor = document.getElementById('valor-total').innerText;
+
+      const dataHoraAtual = new Date().toLocaleString('pt-BR');
+
+      const novoPedidoAdm = {
+        id: Date.now(),
+        dataHora: dataHoraAtual,
+        nomeCliente: nome,
+        tipoResidencia: tipoResidencia,
+        rua: rua,
+        numero: numero,
+        bairro: bairro,
+        bloco: bloco,
+        apartamento: apartamento,
+        referencia: referencia,
+        itens: [...carrinho],
+        pagamento: formaPagamento,
+        troco: trocoPara ? `R$ ${parseFloat(trocoPara).toFixed(2).replace('.', ',')}` : '',
+        total: totalValor
+      };
+      
+      pedidosRecebidos.push(novoPedidoAdm);
+      localStorage.setItem('avila_pedidos_recebidos', JSON.stringify(pedidosRecebidos));
+
+      let itensTexto = carrinho.map(item => `• ${item.nome}: R$ ${item.preco.toFixed(2).replace('.', ',')}`).join('\n');
+
+      let textoMensagem = `*🧾 DELIVERY COMERCIAL ÁVILA* 🛒\n\n` +
+                          `🕒 *Data/Hora:* ${dataHoraAtual}\n` +
+                          `👤 *Cliente:* ${nome}\n` +
+                          `🏠 *Tipo de Residência:* ${tipoResidencia}\n` +
+                          `📍 *Rua/Avenida:* ${rua}\n` +
+                          `🔢 *Número:* ${numero}\n` +
+                          `🏘️ *Bairro:* ${bairro}\n` +
+                          (bloco ? `🏢 *Bloco:* ${bloco}\n` : '') +
+                          (apartamento ? `🚪 *Apartamento:* ${apartamento}\n` : '') +
+                          (referencia ? `📌 *Referência:* ${referencia}\n` : '') +
+                          `\n🛍️ *Itens do Pedido:*\n${itensTexto}\n\n` +
+                          `💳 *Pagamento:* ${formaPagamento}\n` +
+                          (formaPagamento === 'Dinheiro' && trocoPara ? `💵 *Troco para:* R$ ${parseFloat(trocoPara).toFixed(2).replace('.', ',')}\n` : '') +
+                          `💰 *TOTAL DO PEDIDO:* R$ ${totalValor}\n\n` +
+                          `(_Preparando Seu Pedido Para Entrega_)\n\n*AGRADECEMOS A PREFERÊNCIA!* 😍`;
+
+      const urlWhatsAppWeb = `https://api.whatsapp.com/send?phone=5569992535201&text=${encodeURIComponent(textoMensagem)}`;
+
+      window.open(urlWhatsAppWeb, '_blank');
+      concluirEnvioSucesso(nome, totalValor);
+      
+      btnSubmit.disabled = false;
+      btnSubmit.innerText = "✅ FINALIZAR PEDIDO";
+    }
+
+    function concluirEnvioSucesso(nome, totalValor) {
+      alert(`🎉 Pedido finalizado com sucesso!\n\nCliente: ${nome}\nTotal: R$ ${totalValor}\n\n(_Enviando Seu Pedido e Endereço Local_)`);
+      carrinho = [];
+      localStorage.removeItem('avila_carrinho');
+      atualizarCarrinho();
+      document.getElementById('form-pedido').reset();
+      gerenciarTipoResidencia();
+      gerenciarOpcoesPagamento();
+    }
+
+    function atualizarVisualizatorPedidosAdm() {
+      const containerPedidos = document.getElementById('lista-pedidos-adm');
+      const boxAcoesLote = document.getElementById('acoes-lote');
+      const checkboxTodos = document.getElementById('selecionar-todos-pedidos');
+      
+      if (!containerPedidos) return;
+
+      if (checkboxTodos) checkboxTodos.checked = false;
+
+      if (pedidosRecebidos.length === 0) {
+        if (boxAcoesLote) boxAcoesLote.style.display = 'none';
+        containerPedidos.innerHTML = '<p style="font-size: 1.2rem; color: #666; text-align: center; padding: 20px;">Nenhum pedido recebido no momento.</p>';
+        return;
+      }
+
+      if (boxAcoesLote) boxAcoesLote.style.display = 'flex';
+
+      let htmlCards = '';
+      pedidosRecebidos.forEach(p => {
+        let itensStr = p.itens.map(i => `• ${i.nome} (R$ ${i.preco.toFixed(2).replace('.', ',')})`).join('<br>');
+        htmlCards += `
+          <div class="pedido-card-adm">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <h4 style="margin: 0;">🕒 ${p.dataHora}</h4>
+              <div class="checkbox-group" style="margin: 0;">
+                <input type="checkbox" class="check-pedido-item" data-id="${p.id}" style="width: 20px; height: 20px; cursor: pointer;">
+              </div>
+            </div>
+            <p><strong>👤 Cliente:</strong> ${p.nomeCliente}</p>
+            <p><strong>🏠 Residência:</strong> ${p.tipoResidencia}</p>
+            <p><strong>📍 Rua/Avenida:</strong> ${p.rua}, Nº ${p.numero}</p>
+            <p><strong>🏘️ Bairro:</strong> ${p.bairro}</p>
+            ${p.bloco ? `<p><strong>🏢 Bloco:</strong> ${p.bloco}</p>` : ''}
+            ${p.apartamento ? `<p><strong>🚪 Apartamento:</strong> ${p.apartamento}</p>` : ''}
+            ${p.referencia ? `<p><strong>📌 Referência:</strong> ${p.referencia}</p>` : ''}
+            <p><strong>🛍️ Itens:</strong><br>${itensStr}</p>
+            <p><strong>💳 Pagamento:</strong> ${p.pagamento} ${p.troco ? '(Troco para: ' + p.troco + ')' : ''}</p>
+            <p class="destaque-total">💰 TOTAL: R$ ${p.total}</p>
+            <button type="button" class="btn-remover-pedido" onclick="removerPedidoAdm(${p.id})">❌ Excluir / Concluir Pedido</button>
+          </div>
+        `;
+      });
+      containerPedidos.innerHTML = htmlCards;
+    }
+
+    function toggleSelecionarTodos(masterCheckbox) {
+      const checkboxes = document.querySelectorAll('.check-pedido-item');
+      checkboxes.forEach(cb => {
+        cb.checked = masterCheckbox.checked;
+      });
+    }
+
+    function removerPedidoAdm(id) {
+      const pedidoParaExcluir = pedidosRecebidos.find(p => p.id === id);
+      if (!pedidoParaExcluir) return;
+
+      const primeiraConfirmacao = confirm(`Deseja realmente excluir este pedido do cliente ${pedidoParaExcluir.nomeCliente}?`);
+      if (primeiraConfirmacao) {
+        pedidosRecebidos = pedidosRecebidos.filter(p => p.id !== id);
+        localStorage.setItem('avila_pedidos_recebidos', JSON.stringify(pedidosRecebidos));
+        atualizarVisualizatorPedidosAdm();
+      }
+    }
+
+    function excluirSelecionados() {
+      const checkboxesSelecionados = document.querySelectorAll('.check-pedido-item:checked');
+      
+      if (checkboxesSelecionados.length === 0) {
+        alert("Nenhum pedido foi selecionado!");
+        return;
+      }
+
+      const primeiraConfirmacao = confirm(`Deseja realmente excluir os ${checkboxesSelecionados.length} pedidos selecionados?`);
+      if (primeiraConfirmacao) {
+        const idsParaExcluir = Array.from(checkboxesSelecionados).map(cb => Number(cb.getAttribute('data-id')));
+        pedidosRecebidos = pedidosRecebidos.filter(p => !idsParaExcluir.includes(p.id));
+        localStorage.setItem('avila_pedidos_recebidos', JSON.stringify(pedidosRecebidos));
+        atualizarVisualizatorPedidosAdm();
+      }
+    }
+
+    function salvarConfiguracoesAdmin() {
+      precos.gas = parseFloat(document.getElementById('admin-preco-gas').value) || 0;
+      precos.agua = parseFloat(document.getElementById('admin-preco-agua').value) || 0;
+      precos.registro = parseFloat(document.getElementById('admin-preco-registro').value) || 0;
+
+      configSalva.precos = precos;
+      configSalva.chavePix = document.getElementById('admin-chave-pix').value;
+      configSalva.urlQrCode = document.getElementById('admin-url-qrcode').value.trim();
+
+      configSalva.pagamentosAtivos = {
+        dinheiro: document.getElementById('admin-pay-dinheiro').checked,
+        pix: document.getElementById('admin-pay-pix').checked,
+        cartao: document.getElementById('admin-pay-cartao').checked
+      };
+
+      localStorage.setItem('avila_config_global', JSON.stringify(configSalva));
+
+      aplicarConfiguracoesIniciais();
+
+      document.getElementById('pagamento').value = '';
+      gerenciarOpcoesPagamento();
+
+      fecharModalAdmin();
+      alert("⚙️ Configurações salvas permanentemente!");
+    }
   </script>
 
 </body>
