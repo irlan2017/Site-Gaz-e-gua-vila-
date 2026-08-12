@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imóveis Ji-Paraná | Casas e Apartamentos</title>
     <style>
-        /* Estilos Gerais & Responsividade Híbrida (Mobile e Desktop) */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,37 +17,6 @@
             color: #333;
             line-height: 1.6;
             -webkit-text-size-adjust: 100%;
-        }
-
-        .hino-bar {
-            background-color: #27ae60;
-            color: white;
-            text-align: center;
-            padding: 8px 15px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            z-index: 1001;
-            position: relative;
-            flex-wrap: wrap;
-        }
-
-        .btn-play-hino {
-            background: #1b365d;
-            color: white;
-            border: none;
-            padding: 4px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        .btn-play-hino:hover {
-            background: #132743;
         }
 
         header {
@@ -111,41 +79,6 @@
             padding: 4rem 1rem;
             overflow: hidden;
             background-color: #1b365d;
-        }
-
-        .hero-bg-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .hero-bg-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.2s ease-in-out;
-        }
-
-        .hero-bg-slide.active {
-            opacity: 1;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.30);
-            z-index: 2;
         }
 
         .hero-content {
@@ -708,16 +641,6 @@
 </head>
 <body>
 
-    <audio id="audio-hino" loop preload="auto">
-        <source src="https://upload.wikimedia.org/wikipedia/commons/2/23/Hino_de_Ji-Paran%C3%A1_RO.ogg" type="audio/ogg">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="hino-bar" id="hino-bar">
-        <span>🎵 Hino de Ji-Paraná</span>
-        <button class="btn-play-hino" id="btn-toggle-hino" onclick="toggleHino()">▶️ OUVIR HINO</button>
-    </div>
-
     <header>
         <div class="logo">Ji-Paraná <span>Imóveis</span></div>
         <nav>
@@ -727,9 +650,6 @@
     </header>
 
     <section class="hero">
-        <div class="hero-bg-container" id="hero-bg-container"></div>
-        <div class="hero-overlay"></div>
-
         <div class="hero-content">
             <h1>Encontre seu Imóvel em Ji-Paraná</h1>
             <p>Casas e Apartamentos para Venda e Aluguel no 1º e 2º Distrito.</p>
@@ -738,6 +658,7 @@
                 <div class="search-group">
                     <label>Finalidade</label>
                     <select id="filtro-finalidade">
+                        <option value="todos">Todas</option>
                         <option value="venda">Venda</option>
                         <option value="aluguel">Aluguel</option>
                     </select>
@@ -746,6 +667,7 @@
                 <div class="search-group">
                     <label>Tipo de Imóvel</label>
                     <select id="filtro-tipo">
+                        <option value="todos">Todos</option>
                         <option value="casa">Casa</option>
                         <option value="apartamento">Apartamento</option>
                     </select>
@@ -799,7 +721,7 @@
                         <div class="form-group" style="flex:1;"><label>Preço (R$):</label><div class="input-group-cifrao"><span>R$</span><input type="text" id="adm-preco" required></div></div>
                         <div class="form-group" style="flex:1;"><label>Distrito:</label><select id="adm-distrito"><option value="primeiro">1º Distrito</option><option value="segundo">2º Distrito</option></select></div>
                     </div>
-                    <div class="form-group"><label>Bairro:</label><input type="text" id="adm-bairro" required></div>
+                    <div class="form-group"><label>Bairro / Endereço:</label><input type="text" id="adm-bairro" required></div>
                     <div style="display: flex; gap: 10px;">
                         <div class="form-group" style="flex:1;"><label>Banheiros:</label><input type="number" id="adm-banheiros" value="1" required></div>
                         <div class="form-group" style="flex:1;"><label>Quartos:</label><input type="number" id="adm-quartos" value="1" required></div>
@@ -827,17 +749,17 @@
 
             <div id="tab-exportar" class="tab-content">
                 <div class="export-box">
-                    <strong>Gerar Código Atualizado com as Imagens Embutidas:</strong><br>
-                    Para aplicar permanentemente na raiz para qualquer usuário, baixe o arquivo atualizado e substitua no servidor.
+                    <strong>Gerar Código Atualizado na Raiz:</strong><br>
+                    Para embutir permanentemente os imóveis e endereços cadastrados diretamente no código-fonte deste arquivo, clique no botão abaixo.
                     <br><br>
-                    <button onclick="baixarArquivoAtualizado()" style="background:#27ae60; color:#fff; border:none; padding:10px 15px; font-weight:bold; border-radius:5px; cursor:pointer;">📥 Baixar Arquivo Atualizado</button>
+                    <button onclick="baixarArquivoAtualizado()" style="background:#27ae60; color:#fff; border:none; padding:10px 15px; font-weight:bold; border-radius:5px; cursor:pointer;">📥 Baixar Arquivo index.html Atualizado</button>
                 </div>
             </div>
 
             <div id="tab-acessos" class="tab-content">
                 <div class="stats-container">
-                    <div class="stat-card"><h4>Hoje</h4><div class="stat-value" id="stat-hoje">0</div></div>
-                    <div class="stat-card"><h4>Mês</h4><div class="stat-value" id="stat-mes">0</div></div>
+                    <div class="stat-card"><h4>Hoje</h4><div class="stat-value" id="stat-hoje">1</div></div>
+                    <div class="stat-card"><h4>Mês</h4><div class="stat-value" id="stat-mes">1</div></div>
                 </div>
             </div>
         </div>
@@ -849,27 +771,8 @@
     </footer>
 
     <script>
-        // MATRIZ PRINCIPAL DA RAIZ DO SCRIPT (As imagens e dados salvos aqui já vêm embutidos)
-        let imoveisRaizPrincipal = [
-            {
-                "id": "1",
-                "titulo": "Casa Residencial Ampla",
-                "descricao": "Casa espaçosa localizada em rua tranquila do primeiro distrito.",
-                "finalidade": "venda",
-                "tipo": "casa",
-                "preco": "280.000",
-                "bairro": "Bairro Dois Pinheiros (1º Distrito)",
-                "distrito": "primeiro",
-                "banheiros": 2,
-                "quartos": 3,
-                "salas": 1,
-                "area": "180 m²",
-                "whatsapp": "5569992535201",
-                "fotos": [
-                    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=85"
-                ]
-            }
-        ];
+        // MATRIZ PRINCIPAL DA RAIZ DO SCRIPT (Os dados salvos aqui ficam embutidos na raiz)
+        let imoveisRaizPrincipal = [];
 
         let fotosBase64Novas = [];
 
@@ -884,36 +787,81 @@
 
         function salvarImoveisRaiz(lista) {
             localStorage.setItem('jiparana_imoveis_raiz', JSON.stringify(lista));
+            atualizarContadorGerenciar();
         }
 
         function renderizarImoveis(lista = null) {
             const imoveis = lista || obterImoveis();
             const grid = document.getElementById('grid-imoveis');
             grid.innerHTML = '';
-            imoveis.forEach(imovel => {
+            
+            if (imoveis.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#777; padding:2rem;">Nenhum imóvel cadastrado no momento.</p>';
+                return;
+            }
+
+            imoveis.forEach((imovel, indexCard) => {
                 let imgsHtml = '';
-                if (imovel.fotos) {
+                if (imovel.fotos && imovel.fotos.length > 0) {
                     imovel.fotos.forEach(foto => {
                         imgsHtml += `<img src="${foto}" onclick="abrirLightbox('${foto}')">`;
                     });
+                } else {
+                    imgsHtml += `<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='330' style='background:%23ddd;fill:%23aaa'><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='20'>Sem Foto</text></svg>">`;
                 }
+
                 grid.innerHTML += `
                     <div class="card-imovel">
                         <div class="tag-finalidade">${imovel.finalidade} - ${imovel.tipo}</div>
                         <div class="carrossel-container">
-                            <div class="carrossel-slides" data-index="0">${imgsHtml}</div>
+                            <div class="carrossel-slides" data-index="0" style="transform: translateX(0px);">${imgsHtml}</div>
                             ${imovel.fotos && imovel.fotos.length > 1 ? '<button class="btn-carrossel prev" onclick="mudarFoto(this, -1)">❮</button><button class="btn-carrossel next" onclick="mudarFoto(this, 1)">❯</button>' : ''}
                         </div>
                         <div class="card-content">
                             <div class="preco">R$ ${imovel.preco}</div>
                             <h3>${imovel.titulo}</h3>
-                            <div class="bairro">${imovel.bairro}</div>
+                            <div class="bairro">📍 ${imovel.bairro} (${imovel.distrito === 'primeiro' ? '1º Distrito' : '2º Distrito'})</div>
                             <div class="descricao-card">${imovel.descricao}</div>
-                            <a href="https://wa.me/${imovel.whatsapp}" target="_blank" class="btn-whatsapp">Tenho Interesse</a>
+                            <div class="detalhes">
+                                <span>🛏️ ${imovel.quartos || 1} Quartos</span>
+                                <span>🚿 ${imovel.banheiros || 1} Banheiros</span>
+                                <span>🛋️ ${imovel.salas || 1} Salas</span>
+                                <span>📐 ${imovel.area || 'N/D'}</span>
+                            </div>
+                            <a href="https://wa.me/${imovel.whatsapp}?text=Olá,%20tenho%20interesse%20no%20imóvel:%20*${encodeURIComponent(imovel.titulo)}*" target="_blank" class="btn-whatsapp">📲 Tenho Interesse</a>
                         </div>
                     </div>
                 `;
             });
+        }
+
+        function mudarFoto(botao, direcao) {
+            const container = botao.parentElement.querySelector('.carrossel-slides');
+            const totalImgs = container.children.length;
+            let indexAtual = parseInt(container.getAttribute('data-index')) || 0;
+            
+            indexAtual += direcao;
+            if (indexAtual < 0) indexAtual = totalImgs - 1;
+            if (indexAtual >= totalImgs) indexAtual = 0;
+            
+            container.setAttribute('data-index', indexAtual);
+            container.style.transform = `translateX(-${indexAtual * 100}%)`;
+        }
+
+        function filtrarImoveis() {
+            const finalidade = document.getElementById('filtro-finalidade').value;
+            const tipo = document.getElementById('filtro-tipo').value;
+            const distrito = document.getElementById('filtro-distrito').value;
+            
+            const imoveis = obterImoveis();
+            const filtrados = imoveis.filter(imovel => {
+                const matchFinalidade = (finalidade === 'todos' || imovel.finalidade === finalidade);
+                const matchTipo = (tipo === 'todos' || imovel.tipo === tipo);
+                const matchDistrito = (distrito === 'todos' || imovel.distrito === distrito);
+                return matchFinalidade && matchTipo && matchDistrito;
+            });
+            
+            renderizarImoveis(filtrados);
         }
 
         function previewImagens(event) {
@@ -965,8 +913,45 @@
             };
             imoveis.unshift(novo);
             salvarImoveisRaiz(imoveis);
-            alert('Cadastrado com sucesso!');
-            location.reload();
+            fotosBase64Novas = [];
+            renderizarPreviewCadastro();
+            document.getElementById('form-adicionar').reset();
+            alert('Imóvel cadastrado com sucesso!');
+            renderizarImoveis();
+            trocarAbaADM('gerenciar');
+        }
+
+        function atualizarContadorGerenciar() {
+            const imoveis = obterImoveis();
+            document.getElementById('count-imoveis').innerText = imoveis.length;
+            const listaDiv = document.getElementById('lista-gerenciar-imoveis');
+            listaDiv.innerHTML = '';
+            
+            if(imoveis.length === 0) {
+                listaDiv.innerHTML = '<p>Nenhum imóvel cadastrado.</p>';
+                return;
+            }
+
+            imoveis.forEach(imovel => {
+                listaDiv.innerHTML += `
+                    <div class="item-gerenciar">
+                        <div class="item-gerenciar-header">
+                            <div><strong>${imovel.titulo}</strong> - R$ ${imovel.preco} (${imovel.bairro})</div>
+                            <button class="btn-excluir-item" onclick="excluirImovel('${imovel.id}')">Excluir</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function excluirImovel(id) {
+            if(confirm('Deseja realmente excluir este imóvel?')) {
+                let imoveis = obterImoveis();
+                imoveis = imoveis.filter(i => i.id !== id);
+                salvarImoveisRaiz(imoveis);
+                renderizarImoveis();
+                atualizarContadorGerenciar();
+            }
         }
 
         function baixarArquivoAtualizado() {
@@ -984,23 +969,40 @@
             a.download = 'index.html';
             a.click();
             URL.revokeObjectURL(url);
-            alert('Código atualizado baixado!');
+            alert('Arquivo index.html atualizado baixado com sucesso!');
         }
 
-        function abrirModalADM() { document.getElementById('modal-adm').style.display = 'block'; }
-        function fecharModalADM() { document.getElementById('modal-adm').style.display = 'none'; }
+        function abrirModalADM() { 
+            atualizarContadorGerenciar();
+            document.getElementById('modal-adm').style.display = 'block'; 
+        }
+        
+        function fecharModalADM() { 
+            document.getElementById('modal-adm').style.display = 'none'; 
+        }
+
         function trocarAbaADM(aba) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             if(aba==='add'){document.querySelectorAll('.tab-btn')[0].classList.add('active');document.getElementById('tab-add').classList.add('active');}
-            else if(aba==='gerenciar'){document.querySelectorAll('.tab-btn')[1].classList.add('active');document.getElementById('tab-gerenciar').classList.add('active');}
+            else if(aba==='gerenciar'){document.querySelectorAll('.tab-btn')[1].classList.add('active');document.getElementById('tab-gerenciar').classList.add('active');atualizarContadorGerenciar();}
             else if(aba==='exportar'){document.querySelectorAll('.tab-btn')[2].classList.add('active');document.getElementById('tab-exportar').classList.add('active');}
             else if(aba==='acessos'){document.querySelectorAll('.tab-btn')[3].classList.add('active');document.getElementById('tab-acessos').classList.add('active');}
         }
-        function abrirLightbox(url) { document.getElementById('lightbox-img').src = url; document.getElementById('lightbox-modal').style.display = 'flex'; }
-        function fecharLightbox() { document.getElementById('lightbox-modal').style.display = 'none'; }
 
-        window.onload = function() { renderizarImoveis(); };
+        function abrirLightbox(url) { 
+            document.getElementById('lightbox-img').src = url; 
+            document.getElementById('lightbox-modal').style.display = 'flex'; 
+        }
+        
+        function fecharLightbox() { 
+            document.getElementById('lightbox-modal').style.display = 'none'; 
+        }
+
+        window.onload = function() { 
+            renderizarImoveis(); 
+            atualizarContadorGerenciar();
+        };
     </script>
 </body>
 </html>
